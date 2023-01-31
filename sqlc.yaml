@@ -1,0 +1,7 @@
+version: 1
+packages:
+  - path: "./internal/db/mysql/sqlc"
+    name: "mysql"
+    engine: "mysql"
+    schema: "./common/mysql/migration"
+    queries: "./common/mysql/query"
