@@ -8,5 +8,5 @@ import (
 
 
 func Render(ctx *gin.Context) {
-  ctx.HTML(http.StatusOK, "view/landing.html", gin.H{})
+  ctx.HTML(http.StatusOK, "landing.html", gin.H{})
 }
