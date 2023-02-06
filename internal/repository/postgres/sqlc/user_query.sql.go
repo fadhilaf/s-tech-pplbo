@@ -3,7 +3,7 @@
 //   sqlc v1.16.0
 // source: user_query.sql
 
-package mysql
+package postgres
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 
 const createUser = `-- name: CreateUser :execresult
 INSERT INTO users (
-  name, email, password_hash 
+  name, email, password_hash
 ) VALUES ( ?, ?, ? )
 `
 

@@ -8,7 +8,7 @@ ORDER BY name;
 
 -- name: CreateUser :execresult
 INSERT INTO users (
-  name, email, password_hash 
+  name, email, password_hash
 ) VALUES ( ?, ?, ? );
 
 -- name: DeleteUser :exec

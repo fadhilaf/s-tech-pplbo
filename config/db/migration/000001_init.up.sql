@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS users (
-  id int(10) unsigned auto_increment PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar(255) NOT NULL,
   email varchar(255) NOT NULL UNIQUE,
   password_hash varchar(255) NOT NULL,

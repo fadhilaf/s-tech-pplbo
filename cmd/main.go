@@ -1,27 +1,29 @@
 package main
 
 import (
-  "log"
-  "fmt"
+	"fmt"
+	"log"
 
-  appEnv "github.com/FadhilAF/s-tech-pplbo/common/env"
-  mysqlCommon "github.com/FadhilAF/s-tech-pplbo/common/mysql"
-  httpCommon "github.com/FadhilAF/s-tech-pplbo/common/http"
+	appEnv "github.com/FadhilAF/s-tech-pplbo/common/env"
+	httpCommon "github.com/FadhilAF/s-tech-pplbo/common/http"
+	postgresCommon "github.com/FadhilAF/s-tech-pplbo/common/postgres"
 
-  landingPageDelivery "github.com/FadhilAF/s-tech-pplbo/internal/delivery/landing"
+	landingPageDelivery "github.com/FadhilAF/s-tech-pplbo/internal/delivery/landing"
 )
 
 func main() {
-  httpServer := httpCommon.NewHTTPServer() 
+	config := appEnv.LoadConfig(".env")
 
-  config := appEnv.LoadConfig(".env");
+	httpServer := httpCommon.NewHTTPServer()
+	db := postgresCommon.Start("file://config/db/migration", config.PostgresUrl)
 
-  httpServer.Router.GET("/", landingPageDelivery.Render)
+	httpServer.Router.LoadHTMLGlob("internal/template/*.gohtml")
 
-  db := mysqlCommon.Start(config.MysqlUrl);
-  //sementara Close dulu biar compiler golang dk ngamuk
-  db.Close();
-  //apus line close pocok kalo nk lnjut koding
+	httpServer.Router.GET("/", landingPageDelivery.Render)
 
-  log.Fatalln(httpServer.Router.Run(fmt.Sprintf(":%v", config.AppPort))) //kalo print, keluar di terminal, kalo Sprint return string
+	//sementara Close dulu biar compiler golang dk ngamuk
+	db.Close()
+	//apus line close pocok kalo nk lnjut koding
+
+	log.Fatalln(httpServer.Router.Run(fmt.Sprintf(":%v", config.AppPort))) //kalo print, keluar di terminal, kalo Sprint return string
 }
