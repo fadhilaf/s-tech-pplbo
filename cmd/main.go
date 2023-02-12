@@ -15,7 +15,7 @@ func main() {
 	config := appEnv.LoadConfig(".env")
 
 	httpServer := httpCommon.NewHTTPServer()
-	db := postgresCommon.Start("file://config/db/migration", config.PostgresUrl)
+	db := postgresCommon.Start("file://config/postgres/migration", config.PostgresUrl)
 
 	httpServer.Router.LoadHTMLGlob("internal/template/*.gohtml")
 

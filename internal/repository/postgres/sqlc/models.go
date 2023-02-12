@@ -7,14 +7,16 @@ package postgres
 import (
 	"database/sql"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type User struct {
-	ID           int32
+	ID           uuid.UUID
 	Name         string
 	Email        string
 	PasswordHash string
 	Address      sql.NullString
-	PhoneNumber  sql.NullString
+	Phone        sql.NullString
 	CreatedAt    time.Time
 }
