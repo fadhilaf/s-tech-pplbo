@@ -22,8 +22,8 @@ type CreateUserParams struct {
 	Name         string
 	Email        string
 	PasswordHash string
-	Address      sql.NullString
-	Phone        sql.NullString
+	Address      string
+	Phone        string
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error) {
@@ -110,8 +110,8 @@ WHERE id = ?
 
 type UpdateUserParams struct {
 	Name    string
-	Address sql.NullString
-	Phone   sql.NullString
+	Address string
+	Phone   string
 	ID      uuid.UUID
 }
 

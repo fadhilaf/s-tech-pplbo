@@ -31,7 +31,7 @@ func HandleValidationErrors(errs validator.ValidationErrors) (res model.Validati
 			translatedFieldName, found := customMessages[v.Field()]
 			if !found {
 				translatedFieldName = v.Field()
-			} 
+			}
 			finalErrors = append(
 				finalErrors,
 				translateFunction(v, translatedFieldName),

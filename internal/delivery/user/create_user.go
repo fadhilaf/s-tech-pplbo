@@ -1,7 +1,7 @@
 package delivery
 
 import (
-  "github.com/FadhilAF/s-tech-pplbo/common/utils"
+	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 	"github.com/gin-gonic/gin"

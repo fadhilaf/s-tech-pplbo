@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
   name varchar(255) NOT NULL,
   email varchar(255) NOT NULL UNIQUE,
   password_hash varchar(255) NOT NULL,
-  address varchar(255),
-  phone varchar(255),
+  address varchar(255) NOT NULL,
+  phone varchar(255) NOT NULL,
   created_at timestamp NOT NULL DEFAULT (NOW())
 );

@@ -11,23 +11,23 @@ import (
 	postgresql "github.com/FadhilAF/s-tech-pplbo/internal/repository/postgres/sqlc"
 
 	passwordUtils "github.com/FadhilAF/s-tech-pplbo/common/password"
-	utils "github.com/FadhilAF/s-tech-pplbo/common/utils"
+	utils "github.com/FadhilAF/s-tech-pplbo/internal/utils"
 )
 
 func (usecase *userUsecaseImpl) CreateUser(req model.CreateUserRequest) model.WebServiceResponse {
-  passwordHashManager := passwordUtils.NewPasswordHashManagerBcrypt()
+	passwordHashManager := passwordUtils.NewPasswordHashManagerBcrypt()
 
-  passwordHash, err := passwordHashManager.HashPassword(req.Password)
-  if err != nil {
-    return utils.ToWebServiceResponse("Fungsi hash password gagal", http.StatusInternalServerError, nil)
-  }
+	passwordHash, err := passwordHashManager.HashPassword(req.Password)
+	if err != nil {
+		return utils.ToWebServiceResponse("Fungsi hash password gagal", http.StatusInternalServerError, nil)
+	}
 
 	_, err = usecase.Store.CreateUser(context.Background(), postgresql.CreateUserParams{
-		Name: req.Name,
-    Email: req.Email,
-    PasswordHash: passwordHash,
-    Address: req.Address,
-    Phone: req.Phone,
+		Name:         req.Name,
+		Email:        req.Email,
+		PasswordHash: passwordHash,
+		Address:      req.Address,
+		Phone:        req.Phone,
 	})
 
 	if err != nil {

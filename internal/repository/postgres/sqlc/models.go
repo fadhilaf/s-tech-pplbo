@@ -5,7 +5,6 @@
 package postgres
 
 import (
-	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
@@ -16,7 +15,7 @@ type User struct {
 	Name         string
 	Email        string
 	PasswordHash string
-	Address      sql.NullString
-	Phone        sql.NullString
+	Address      string
+	Phone        string
 	CreatedAt    time.Time
 }

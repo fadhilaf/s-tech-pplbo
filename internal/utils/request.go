@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-  "github.com/FadhilAF/s-tech-pplbo/internal/model"
-  "github.com/FadhilAF/s-tech-pplbo/internal/validation"
+	"github.com/FadhilAF/s-tech-pplbo/common/validation"
+	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
