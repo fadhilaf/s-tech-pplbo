@@ -53,7 +53,45 @@ func (app *App) createHandlers() *gin.Engine {
 }
 
 func (app *App) StartServer() {
+	if app.Config.Env == config.EnvProd {
+		fmt.Println(
+			color.Ize(color.Yellow, color.InBold("\nAPP RUN IN PRODUCTION MODE\n")),
+		)
+	} else {
+		fmt.Println(
+			color.Ize(color.Red, color.InBold("\nAPP RUN IN DEVELOPMENT MODE\n")),
+		)
+	}
 
+	osSignalChan := make(chan os.Signal, 1)
+	signal.Notify(osSignalChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+	if validator, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		validations.InitValidations(validator)
+	}
+	router := app.createHandlers()
+	address := fmt.Sprintf("%s:%s", app.Config.AppHost, app.Config.AppPort)
+	log.Printf("Server listening on %v\n", address)
+
+	srv := &http.Server{
+		Addr:    address,
+		Handler: router,
+	}
+
+	go func() {
+		err := srv.ListenAndServe()
+		if err != nil {
+			log.Fatalf("Cannot start server %v\n", err)
+		}
+	}()
+
+	<-osSignalChan
+	err := srv.Close()
+	if err != nil {
+		log.Fatalf("cannot shutdown server %v", err)
+	}
+	fmt.Println()
+	log.Println("Server exiting")
 }
 
 func New(config config.Config, db *sql.DB) App {
