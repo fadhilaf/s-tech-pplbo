@@ -43,7 +43,8 @@ func (app *App) createHttpHandlers() *gin.Engine {
 
 	apiRouterGroup := router.Group("/api")
 
-	router.LoadHTMLGlob("template/*")
+	// ado yg template folder path ny "internal/template/blabla" ado jg yg "file://internal/template/blabla"
+	router.LoadHTMLGlob("internal/template/*")
 	viewRouterGroup := router.Group("/")
 
 	app.viewHandler(viewRouterGroup)
@@ -65,7 +66,7 @@ func (app *App) createHttpHandlers() *gin.Engine {
 	return router
 }
 
-func (app *App) StartServer(viewPath string) {
+func (app *App) StartServer() {
 	if app.Config.Env == config.EnvProd {
 		fmt.Println(
 			color.Ize(color.Yellow, color.InBold("\nAPP RUN IN PRODUCTION MODE\n")),

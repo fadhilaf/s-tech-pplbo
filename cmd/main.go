@@ -11,6 +11,9 @@ import (
 func main() {
 	appConfig := config.LoadConfig(".env")
 
-	postgresDb = postgres.Start("../common/postgres/migration", appConfig.PostgresUrl)
+	postgresDb := postgres.Start(appConfig.PostgresUrl)
 
+	app := app.New(appConfig, postgresDb)
+
+	app.StartServer()
 }
