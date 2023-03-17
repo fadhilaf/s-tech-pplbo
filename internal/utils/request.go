@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/FadhilAF/s-tech-pplbo/common/validation"
+	"github.com/FadhilAF/s-tech-pplbo/common/validations"
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 
 	"github.com/gin-gonic/gin"
@@ -45,7 +45,7 @@ func BindURIAndValidate(ctx *gin.Context, i interface{}) bool {
 
 func validate(ctx *gin.Context, err error) {
 	if errValidations, ok := err.(validator.ValidationErrors); ok {
-		res := validation.HandleValidationErrors(errValidations)
+		res := validations.HandleValidationErrors(errValidations)
 		ctx.JSON(res.Status, res)
 	} else if _, ok := err.(*json.UnmarshalTypeError); ok {
 		ctx.JSON(http.StatusBadRequest, model.WebServiceResponse{

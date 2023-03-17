@@ -21,6 +21,7 @@ func NewUserDelivery(usecase usecase.UserUsecase) UserDelivery {
 	}
 }
 
+// type userHandler ini ditambahi satu per satu per file selain init
 type userHandler struct {
 	usecase usecase.UserUsecase
 }

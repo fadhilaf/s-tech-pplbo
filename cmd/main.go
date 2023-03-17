@@ -1,23 +1,16 @@
 package main
 
 import (
-	"log"
+	"github.com/FadhilAF/s-tech-pplbo/config"
 
-	httpCommon "github.com/FadhilAF/s-tech-pplbo/common/http"
+	"github.com/FadhilAF/s-tech-pplbo/common/postgres"
 
-	// "github.com/FadhilAF/s-tech-pplbo/config"
-
-	landingPageDelivery "github.com/FadhilAF/s-tech-pplbo/internal/delivery/landing"
+	"github.com/FadhilAF/s-tech-pplbo/internal/app"
 )
 
 func main() {
-	httpServer := httpCommon.NewHTTPServer()
+	appConfig := config.LoadConfig(".env")
 
-	httpServer.Router.LoadHTMLGlob("internal/template/*.gohtml")
+	postgresDb = postgres.Start("../common/postgres/migration", appConfig.PostgresUrl)
 
-	httpServer.Router.GET("/", landingPageDelivery.Render)
-
-	// appConfig := config.LoadConfig(".env")
-
-	log.Fatalln(httpServer.Router.Run()) //kalo print, keluar di terminal, kalo Sprint return string
 }

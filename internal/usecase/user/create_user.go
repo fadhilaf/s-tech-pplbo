@@ -5,10 +5,8 @@ import (
 
 	"net/http"
 
-	// "github.com/gin-gonic/gin"
-
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
-	postgresql "github.com/FadhilAF/s-tech-pplbo/internal/repository/postgres/sqlc"
+	repositoryModel "github.com/FadhilAF/s-tech-pplbo/internal/repository/postgres/sqlc"
 
 	passwordUtils "github.com/FadhilAF/s-tech-pplbo/common/password"
 	utils "github.com/FadhilAF/s-tech-pplbo/internal/utils"
@@ -22,7 +20,12 @@ func (usecase *userUsecaseImpl) CreateUser(req model.CreateUserRequest) model.We
 		return utils.ToWebServiceResponse("Fungsi hash password gagal", http.StatusInternalServerError, nil)
 	}
 
-	_, err = usecase.Store.CreateUser(context.Background(), postgresql.CreateUserParams{
+	_, err = usecase.Store.GetUserByEmail(context.Background(), req.Email)
+	if err == nil {
+		return utils.ToWebServiceResponse("Email sudah terdaftar", http.StatusConflict, nil)
+	}
+
+	_, err = usecase.Store.CreateUser(context.Background(), repositoryModel.CreateUserParams{
 		Name:         req.Name,
 		Email:        req.Email,
 		PasswordHash: passwordHash,

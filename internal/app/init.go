@@ -4,13 +4,24 @@ import (
 	"database/sql"
 	"fmt"
 
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/TwiN/go-color"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
-	"github.com/FadhilAF/s-tech-pplbo/config"
+	"github.com/gin-gonic/gin/binding"
 
+	"github.com/go-playground/validator/v10"
+
+	"github.com/FadhilAF/s-tech-pplbo/config"
 	"github.com/FadhilAF/s-tech-pplbo/internal/repository"
+
+	"github.com/FadhilAF/s-tech-pplbo/common/validations"
 )
 
 type App struct {
@@ -20,7 +31,7 @@ type App struct {
 	store    repository.Store
 }
 
-func (app *App) createHandlers() *gin.Engine {
+func (app *App) createHttpHandlers() *gin.Engine {
 	router := gin.Default()
 
 	corsCfg := cors.DefaultConfig()
@@ -30,13 +41,15 @@ func (app *App) createHandlers() *gin.Engine {
 
 	router.Use(cors.New(corsCfg))
 
-	viewRouterGroup := router.Group("/")
 	apiRouterGroup := router.Group("/api")
+
+	router.LoadHTMLGlob("template/*")
+	viewRouterGroup := router.Group("/")
 
 	app.viewHandler(viewRouterGroup)
 	app.apiHandler(apiRouterGroup)
 
-	// mesin untuk menampilkan semua routes yang ada?
+	// >> mesin untuk menampilkan semua routes yang ada
 	routes := router.Routes()
 	if gin.Mode() == gin.DebugMode {
 		fmt.Println()
@@ -47,12 +60,12 @@ func (app *App) createHandlers() *gin.Engine {
 		}
 		fmt.Println()
 	}
-	// mesin untuk menampilkan semua routes yang ada? selesai
+	// << mesin untuk menampilkan semua routes yang ada selesai
 
 	return router
 }
 
-func (app *App) StartServer() {
+func (app *App) StartServer(viewPath string) {
 	if app.Config.Env == config.EnvProd {
 		fmt.Println(
 			color.Ize(color.Yellow, color.InBold("\nAPP RUN IN PRODUCTION MODE\n")),
@@ -64,12 +77,15 @@ func (app *App) StartServer() {
 	}
 
 	osSignalChan := make(chan os.Signal, 1)
-	signal.Notify(osSignalChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	// signal.Notify akan memasukkan nilai ke channel osSignalChan ketika ada signal interrupt yang masuk (SIGINT (Ctrl+C) atau SIGTERM (kill))
+	// dibuat ini, biar program tidak langsung berhenti ketika function main selesai dijalankan. (nunggu di line 98 sampai ada signal interrupt)
+	signal.Notify(osSignalChan, syscall.SIGINT, syscall.SIGTERM)
 
 	if validator, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		//validations itu settingan custom, utk validasi email, dll buatan kito dewek di folder validation
 		validations.InitValidations(validator)
 	}
-	router := app.createHandlers()
+	router := app.createHttpHandlers()
 	address := fmt.Sprintf("%s:%s", app.Config.AppHost, app.Config.AppPort)
 	log.Printf("Server listening on %v\n", address)
 
@@ -85,6 +101,7 @@ func (app *App) StartServer() {
 		}
 	}()
 
+	//ngeluarin nilai channel, kalo channel masih kosong, jadi nunggu disini sampe ada signal interrupt
 	<-osSignalChan
 	err := srv.Close()
 	if err != nil {
@@ -95,8 +112,8 @@ func (app *App) StartServer() {
 }
 
 func New(config config.Config, db *sql.DB) App {
-	app := App{}
 
+	app := App{}
 	app.Config = config
 
 	app.store = repository.NewPostgresStore(db)

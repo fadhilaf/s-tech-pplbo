@@ -14,8 +14,8 @@ import (
 type Querier interface {
 	CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error)
 	DeleteUser(ctx context.Context, id uuid.UUID) error
-	GetUser(ctx context.Context, id uuid.UUID) (User, error)
-	ListUser(ctx context.Context) ([]ListUserRow, error)
+	GetUser(ctx context.Context) ([]GetUserRow, error)
+	GetUserByEmail(ctx context.Context, email string) (User, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (sql.Result, error)
 }
 

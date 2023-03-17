@@ -1,10 +1,11 @@
--- name: GetUser :one
-SELECT * FROM users
-where id = ? LIMIT 1;
-
--- name: ListUser :many
+-- name: GetUser :many
 SELECT id, name, email FROM users
 ORDER BY name;
+
+-- name: GetUserByEmail :one
+SELECT * FROM users
+where email = ? LIMIT 1;
+
 
 -- name: CreateUser :execresult
 INSERT INTO users (

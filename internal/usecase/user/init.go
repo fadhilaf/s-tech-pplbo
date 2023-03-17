@@ -1,8 +1,8 @@
 package usecase
 
 import (
-  "github.com/FadhilAF/s-tech-pplbo/internal/repository"
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
+	"github.com/FadhilAF/s-tech-pplbo/internal/repository"
 )
 
 type UserUsecase interface {
@@ -16,11 +16,11 @@ type UserUsecase interface {
 var _ UserUsecase = &userUsecaseImpl{}
 
 func NewUserUsecase(store repository.Store) UserUsecase {
-  return &userUsecaseImpl{
-    Store: store,
-  }
+	return &userUsecaseImpl{
+		Store: store,
+	}
 }
 
 type userUsecaseImpl struct {
-  repository.Store
+	repository.Store
 }

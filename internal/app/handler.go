@@ -6,10 +6,11 @@ import (
 )
 
 func (app *App) viewHandler(router *gin.RouterGroup) {
-
+	viewGroup := router.Group("/")
+	route.ViewRoutes(viewGroup, app.delivery.view)
 }
 
 func (app *App) apiHandler(router *gin.RouterGroup) {
-	userGroup := router.Group("/users")
+	userGroup := router.Group("/user")
 	route.UserRoutes(userGroup, app.delivery.user)
 }
