@@ -8,6 +8,8 @@ import (
 
 type ViewDelivery interface {
 	RenderHome(ctx *gin.Context)
+	RenderRegister(ctx *gin.Context)
+	RenderLogin(ctx *gin.Context)
 }
 
 var _ ViewDelivery = &viewHandler{}

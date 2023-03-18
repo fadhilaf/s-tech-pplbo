@@ -1,24 +1,32 @@
-{{ define "header" }}
-    <header>
-      <center>
-        <h1>S-TECH</h1>
-        <a href="/">Home</a>
-        <a href="/buy">Belanja</a>
-        {{if .IsLoggedIn}}
-          <a href="/buy/order">Pesanan</a>
-          <a href="/auth/logout">Logout</a>
-        {{else}}
-          <a href="/auth/register">Register</a> 
-          <a href="/auth/login">Login</a> 
-        {{end}}
-      </center>
-    </header>
+{{ define "navbar" }}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+      <img src="https://i.ibb.co/DMSR2cH/S-TECH.png" alt="S-TECH" height="40px">
+      <a class="navbar-brand ms-2 fw-bold" href="#!">S-TECH</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+          class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+          <li class="nav-item"></li>
+        </ul>
+        <form class="d-flex">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+          </form>
+        </form>
+      </div>
+    </div>
+  </nav>
 {{ end }}
 
 {{ define "footer" }}
-    <footer>
-      <center>
-        <p>copyright S-TECH</p>
-      </center>
-    </footer>
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; S-TECH 2023</p>
+    </div>
+  </footer>
 {{ end }}

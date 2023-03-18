@@ -44,7 +44,8 @@ func (app *App) createHttpHandlers() *gin.Engine {
 	apiRouterGroup := router.Group("/api")
 
 	// ado yg template folder path ny "internal/template/blabla" ado jg yg "file://internal/template/blabla"
-	router.LoadHTMLGlob("internal/template/*")
+	router.LoadHTMLGlob("internal/template/*.gohtml")
+	router.Static("/assets", "./internal/template/assets")
 	viewRouterGroup := router.Group("/")
 
 	app.viewHandler(viewRouterGroup)

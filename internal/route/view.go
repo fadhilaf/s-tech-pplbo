@@ -8,6 +8,6 @@ import (
 
 func ViewRoutes(router *gin.RouterGroup, handler delivery.ViewDelivery) {
 	router.GET("/", handler.RenderHome)
-	// router.GET("/register", RenderRegister)
-	// router.GET("/login", RenderLogin)
+	router.GET("/register", handler.RenderRegister)
+	router.GET("/login", handler.RenderLogin)
 }
