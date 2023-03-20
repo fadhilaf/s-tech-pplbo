@@ -9,10 +9,10 @@ func CheckUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
 
-		if session.Get("user_id") == nil {
+		if session.Get("user") == nil {
 			c.AbortWithStatus(401)
 		}
-		c.Set("user_id", session.Get("user_id"))
+		c.Set("user", session.Get("user"))
 	}
 }
 

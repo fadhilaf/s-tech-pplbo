@@ -7,10 +7,7 @@ import (
 
 type AuthUsecase interface {
 	UserLogin(model.UserLoginRequest) model.WebServiceResponse
-	// Register(model.RegisterRequest) model.WebServiceResponse
-	// AdminLogin(model.AdminLoginRequest) model.WebServiceResponse
-	// UserLogout() model.WebServiceResponse
-	// AdminLogout() model.WebServiceResponse
+	AdminLogin(model.UserLoginRequest) model.WebServiceResponse
 }
 
 var _ AuthUsecase = &authUsecaseImpl{}
