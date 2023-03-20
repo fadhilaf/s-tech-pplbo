@@ -7,14 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (handler *userHandler) CreateUser(ctx *gin.Context) {
-	var req model.CreateUserRequest
+func (handler *userHandler) GetUserById(ctx *gin.Context) {
+	var req model.GetUserRequest
 
-	ok := utils.BindFormAndValidate(ctx, &req)
+	ok := utils.BindURIAndValidate(ctx, &req)
 	if !ok {
 		return
 	}
-	res := handler.usecase.CreateUser(req)
+
+	res := handler.usecase.GetUser(req)
 
 	ctx.JSON(res.Status, res)
 }

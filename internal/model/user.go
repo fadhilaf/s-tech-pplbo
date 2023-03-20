@@ -21,7 +21,7 @@ type CreateUserRequest struct {
 	Password string `json:"password" form:"password" binding:"required"`
 	Name     string `json:"name" form:"name" binding:"required"`
 	Address  string `json:"address" form:"address" binding:"required"`
-	Phone    string `json:"phone" form:"phone" binding:"required,e164"`
+	Phone    string `json:"phone" form:"phone" binding:"required"`
 }
 
 type GetUserRequest struct {

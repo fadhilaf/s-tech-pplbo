@@ -15,7 +15,9 @@ import (
 const createUser = `-- name: CreateUser :execresult
 INSERT INTO users (
   name, email, password_hash, address, phone
-) VALUES ( ?, ?, ?, ?, ? )
+) VALUES ( 
+  $1, $2, $3, $4, $5
+)
 `
 
 type CreateUserParams struct {
@@ -38,7 +40,7 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Res
 
 const deleteUser = `-- name: DeleteUser :exec
 DELETE FROM users
-WHERE id = ?
+WHERE id = $1
 `
 
 func (q *Queries) DeleteUser(ctx context.Context, id uuid.UUID) error {
@@ -82,7 +84,7 @@ func (q *Queries) GetUser(ctx context.Context) ([]GetUserRow, error) {
 
 const getUserByEmail = `-- name: GetUserByEmail :one
 SELECT id, name, email, password_hash, address, phone, created_at FROM users
-where email = ? LIMIT 1
+where email = $1 LIMIT 1
 `
 
 func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error) {
@@ -100,26 +102,46 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 	return i, err
 }
 
+const getUserById = `-- name: GetUserById :one
+SELECT id, name, email, password_hash, address, phone, created_at FROM users
+WHERE id = $1 LIMIT 1
+`
+
+func (q *Queries) GetUserById(ctx context.Context, id uuid.UUID) (User, error) {
+	row := q.db.QueryRowContext(ctx, getUserById, id)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Email,
+		&i.PasswordHash,
+		&i.Address,
+		&i.Phone,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const updateUser = `-- name: UpdateUser :execresult
 UPDATE users SET
-  name = ?,
-  address = ?,
-  phone = ?
-WHERE id = ?
+  name = $2,
+  address = $3,
+  phone = $4
+WHERE id = $1
 `
 
 type UpdateUserParams struct {
+	ID      uuid.UUID
 	Name    string
 	Address string
 	Phone   string
-	ID      uuid.UUID
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (sql.Result, error) {
 	return q.db.ExecContext(ctx, updateUser,
+		arg.ID,
 		arg.Name,
 		arg.Address,
 		arg.Phone,
-		arg.ID,
 	)
 }

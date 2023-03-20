@@ -16,6 +16,7 @@ type Querier interface {
 	DeleteUser(ctx context.Context, id uuid.UUID) error
 	GetUser(ctx context.Context) ([]GetUserRow, error)
 	GetUserByEmail(ctx context.Context, email string) (User, error)
+	GetUserById(ctx context.Context, id uuid.UUID) (User, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (sql.Result, error)
 }
 

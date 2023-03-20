@@ -1,10 +1,6 @@
 package model
 
-import (
-
-)
-
-type UserLogin struct {
+type UserLoginRequest struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }

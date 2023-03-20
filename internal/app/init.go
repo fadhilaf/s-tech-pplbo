@@ -3,7 +3,6 @@ package app
 import (
 	"database/sql"
 	"fmt"
-
 	"log"
 	"net/http"
 	"os"
@@ -19,7 +18,8 @@ import (
 	"github.com/go-playground/validator/v10"
 
 	"github.com/FadhilAF/s-tech-pplbo/config"
-	"github.com/FadhilAF/s-tech-pplbo/internal/repository"
+
+	"github.com/FadhilAF/s-tech-pplbo/internal/middleware"
 
 	"github.com/FadhilAF/s-tech-pplbo/common/validations"
 )
@@ -28,7 +28,7 @@ type App struct {
 	Config   config.Config
 	delivery deliveries
 	usecase  usecases
-	store    repository.Store
+	db       *sql.DB
 }
 
 func (app *App) createHttpHandlers() *gin.Engine {
@@ -40,6 +40,8 @@ func (app *App) createHttpHandlers() *gin.Engine {
 	corsCfg.AllowAllOrigins = true
 
 	router.Use(cors.New(corsCfg))
+
+	router.Use(middleware.SessionMiddleware(app.db))
 
 	apiRouterGroup := router.Group("/api")
 
@@ -118,7 +120,7 @@ func New(config config.Config, db *sql.DB) App {
 	app := App{}
 	app.Config = config
 
-	app.store = repository.NewPostgresStore(db)
+	app.db = db
 	app.initUsecase()
 	app.initDelivery()
 

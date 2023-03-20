@@ -34,5 +34,5 @@ func (usecase *userUsecaseImpl) CreateUser(req model.CreateUserRequest) model.We
 		return utils.ToWebServiceResponse("Menambah user ke db gagal", http.StatusInternalServerError, nil)
 	}
 
-	return utils.ToWebServiceResponse("Divisi berhasil dibuat", http.StatusCreated, nil)
+	return utils.ToWebServiceResponse("User berhasil dibuat", http.StatusCreated, nil)
 }
