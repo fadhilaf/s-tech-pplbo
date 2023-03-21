@@ -2,7 +2,7 @@ package route
 
 import (
 	delivery "github.com/FadhilAF/s-tech-pplbo/internal/delivery/view"
-	"github.com/FadhilAF/s-tech-pplbo/internal/middleware"
+	// "github.com/FadhilAF/s-tech-pplbo/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,11 +16,11 @@ func ViewRoutes(router *gin.RouterGroup, handler delivery.ViewDelivery) {
 
 	// Perlu dibuat Routes baru
 
-	// userGroup := router.Group("/user", middleware.CheckUser())
-	// userGroup.GET("/order", handler.RenderOrder)
+	userGroup := router.Group("/" /* middleware.CheckUser() */)
+	userGroup.GET("/order", handler.RenderOrder)
 
-	adminGroup := router.Group("/admin", middleware.CheckAdmin())
-	adminGroup.GET("/admin", handler.RenderAdmin)
-	// adminGroup.GET("/admin/tambah", handler.RenderTambah)
-	// adminGroup.GET("/admin/order", handler.RenderOrderAdmin)
+	adminGroup := router.Group("/admin" /* middleware.CheckAdmin() */)
+	adminGroup.GET("/", handler.RenderAdmin)
+	adminGroup.GET("/tambah", handler.RenderTambah)
+	// adminGroup.GET("/order", handler.RenderOrderAdmin)
 }

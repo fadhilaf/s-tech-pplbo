@@ -11,6 +11,8 @@ type ViewDelivery interface {
 	RenderRegister(ctx *gin.Context)
 	RenderLogin(ctx *gin.Context)
 	RenderAdmin(ctx *gin.Context)
+	RenderOrder(ctx *gin.Context)
+	RenderTambah(ctx *gin.Context)
 }
 
 var _ ViewDelivery = &viewHandler{}

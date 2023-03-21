@@ -3,13 +3,12 @@ package utils
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-
-	"github.com/FadhilAF/s-tech-pplbo/internal/model"
+	"github.com/google/uuid"
 )
 
-func SaveUserToSession(c *gin.Context, user model.User) {
+func SaveUserToSession(c *gin.Context, id uuid.UUID) {
 	session := sessions.Default(c)
-	session.Set("user", user)
+	session.Set("user_id", id)
 	session.Options(sessions.Options{
 		HttpOnly: true,
 	})

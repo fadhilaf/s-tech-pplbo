@@ -19,7 +19,7 @@ func (handler *authHandler) UserLogin(ctx *gin.Context) {
 
 	user, ok := res.Data.(model.User)
 	if ok {
-		utils.SaveUserToSession(ctx, user)
+		utils.SaveUserToSession(ctx, user.ID)
 	}
 
 	ctx.JSON(res.Status, res)

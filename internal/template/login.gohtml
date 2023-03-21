@@ -43,27 +43,28 @@
                     <img src="https://i.ibb.co/FJVXfkp/S-TECH-1.png" alt="S-TECH" border="0" height="150px">
                   </div>
                 </a>
-                <div class="form-outline form-white mb-4 mt-4">
-                  <input style="background-color: #dfe9f5;" type="email" id="typeEmailX"
-                    class="form-control form-control-lg" placeholder="Username" />
-                </div>
+                <form action="/api/auth/login" method="POST">
+                  <div class="form-outline form-white mb-4 mt-4">
+                    <input style="background-color: #dfe9f5;" type="email" id="typeEmailX"
+                      class="form-control form-control-lg" placeholder="Username" />
+                  </div>
 
-                <div class="form-outline form-white mb-4">
-                  <input style="background-color: #dfe9f5;" type="password" id="typePasswordX"
-                    class="form-control form-control-lg" placeholder="Password" />
-                </div>
+                  <div class="form-outline form-white mb-4">
+                    <input style="background-color: #dfe9f5;" type="password" id="typePasswordX"
+                      class="form-control form-control-lg" placeholder="Password" />
+                  </div>
 
-                {{if .Message}}
-                <div class="alert alert-primary" role="alert">
-                  {{.Message}}
-                </div>
-                {{end}}
+                  {{if .Message}}
+                  <div class="alert alert-primary" role="alert">
+                    {{.Message}}
+                  </div>
+                  {{end}}
 
-                <button class="btn btn-primary btn-lg px-5" type="submit">
-                  Masuk
-                </button>
+                  <button class="btn btn-primary btn-lg px-5" type="submit">
+                    Masuk
+                  </button>
+                </form>
               </div>
-
               <div>
                 <p class="mb-0">
                   Belum Punya Akun ?
