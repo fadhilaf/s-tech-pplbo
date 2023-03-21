@@ -3,23 +3,22 @@ package delivery
 import (
 	"net/http"
 
-	"github.com/FadhilAF/s-tech-pplbo/internal/model"
+	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func (handler *viewHandler) RenderRegister(c *gin.Context) {
-	//gaya REST API
-	inputDataSession, _ := c.Get("inputData")
+	message := utils.GetResponse(c)
 
-	inputData, ok := inputDataSession.(model.InputData)
+	if message != "" {
+		utils.DeleteResponse(c)
 
-	if ok {
 		c.HTML(http.StatusOK, "register.gohtml", gin.H{
-			"message": inputData.Message,
+			"Message": message,
 		})
 	} else {
 		c.HTML(http.StatusOK, "register.gohtml", gin.H{
-			"message": "",
+			"Message": "",
 		})
 	}
 }

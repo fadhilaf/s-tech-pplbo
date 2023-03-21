@@ -46,31 +46,31 @@
                 <form action="/api/user" method="POST">
                   <div class="form-outline form-white mb-4 mt-4">
                     <input style="background-color: #dfe9f5;" type="email" id="typeEmailX" name="email"
-                      class="form-control form-control-lg" placeholder="Email" />
+                      class="form-control form-control-lg" placeholder="Email" required />
                   </div>
 
                   <div class="form-outline form-white mb-4">
                     <input style="background-color: #dfe9f5;" type="text" id="typeUsernameX" name="name"
-                      class="form-control form-control-lg" placeholder="Name" />
+                      class="form-control form-control-lg" placeholder="Name" required />
                   </div>
                   <div class="form-outline form-white mb-4">
                     <input style="background-color: #dfe9f5;" type="text" id="typePhoneX" name="phone"
-                      class="form-control form-control-lg" placeholder="No Telpon" />
+                      class="form-control form-control-lg" placeholder="No Telpon" required />
                   </div>
                   <div class="form-outline form-white mb-4">
                     <textarea style="background-color: #dfe9f5;" type="text" id="typeAddressX" name="address"
-                      class="form-control form-control-lg" placeholder="Address"></textarea>
+                      class="form-control form-control-lg" placeholder="Address" required></textarea>
                   </div>
                   <div class="form-outline form-white mb-4">
                     <input style="background-color: #dfe9f5;" type="password" id="typePasswordX" name="password"
-                      class="form-control form-control-lg" placeholder="Password" />
+                      class="form-control form-control-lg" placeholder="Password" required />
                   </div>
 
-                  {{ if .Message }}
+                  {{if .Message}}
                   <div class="alert alert-primary" role="alert">
-                    {{ .Message }}
+                    {{.Message}}
                   </div>
-                  {{ end }}
+                  {{end}}
 
                   <button class="btn btn-primary btn-lg px-5" type="submit">
                     Daftar
@@ -81,7 +81,7 @@
               <div>
                 <p class="mb-0">
                   Sudah Punya Akun ?
-                  <a href="login.html" class="text-black fw-bold">Login</a>
+                  <a href="/login" class="text-black fw-bold">Login</a>
                 </p>
               </div>
             </div>
