@@ -13,4 +13,6 @@ func (app *App) viewHandler(router *gin.RouterGroup) {
 func (app *App) apiHandler(router *gin.RouterGroup) {
 	userGroup := router.Group("/user")
 	route.UserRoutes(userGroup, app.delivery.user)
+	authGroup := router.Group("/auth")
+	route.AuthRoutes(authGroup, app.delivery.auth)
 }

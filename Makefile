@@ -15,7 +15,7 @@ migrate-down-postgres:
 migrate-drop:
 	migrate -path ./common/postgres/migration -database $(POSTGRES_CONNECTION_URL) -verbose drop
 
-migrate-fresh: migrate-down migrate-up
+migrate-fresh-postgres: migrate-down-postgres migrate-up-postgres
 
 sqlc:
 	sqlc -f sqlc.yaml generate

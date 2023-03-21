@@ -16,5 +16,9 @@ func (handler *userHandler) CreateUser(ctx *gin.Context) {
 	}
 	res := handler.usecase.CreateUser(req)
 
-	ctx.JSON(res.Status, res)
+	// Gaya REST API
+	// ctx.JSON(res.Status, res)
+
+	utils.SaveInputData(ctx, model.InputData{Message: res.Message})
+	ctx.Redirect(res.Status, "/register")
 }

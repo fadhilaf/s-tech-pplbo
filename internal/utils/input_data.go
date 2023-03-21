@@ -7,8 +7,8 @@ import (
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 )
 
-func SaveAuthInputData(c *gin.Context, data model.AuthInputData) {
+func SaveInputData(c *gin.Context, data model.InputData) {
 	session := sessions.Default(c)
-	session.Set("auth_input_data", data)
+	session.Set("input_data", data)
 	session.Save()
 }

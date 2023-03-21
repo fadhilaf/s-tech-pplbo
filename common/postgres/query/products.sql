@@ -16,14 +16,15 @@ WHERE id = $1 LIMIT 1;
 -- name: GetProductByQuery :many
 SELECT * FROM products
 WHERE name ILIKE $1
+ORDER BY name;
 
 -- name: UpdateProduct :execresult
 UPDATE products SET
   name = $2,
   price = $3,
   stock = $4,
-  description = $6,
-  image_url = $7
+  description = $5,
+  image_url = $6
 WHERE id = $1;
 
 -- name: DeleteProduct :exec

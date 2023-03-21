@@ -5,10 +5,77 @@
 package postgres
 
 import (
+	"database/sql"
+	"database/sql/driver"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 )
+
+type OrderStatus string
+
+const (
+	OrderStatusPending    OrderStatus = "pending"
+	OrderStatusProcessing OrderStatus = "processing"
+	OrderStatusDelivered  OrderStatus = "delivered"
+)
+
+func (e *OrderStatus) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = OrderStatus(s)
+	case string:
+		*e = OrderStatus(s)
+	default:
+		return fmt.Errorf("unsupported scan type for OrderStatus: %T", src)
+	}
+	return nil
+}
+
+type NullOrderStatus struct {
+	OrderStatus OrderStatus
+	Valid       bool // Valid is true if OrderStatus is not NULL
+}
+
+// Scan implements the Scanner interface.
+func (ns *NullOrderStatus) Scan(value interface{}) error {
+	if value == nil {
+		ns.OrderStatus, ns.Valid = "", false
+		return nil
+	}
+	ns.Valid = true
+	return ns.OrderStatus.Scan(value)
+}
+
+// Value implements the driver Valuer interface.
+func (ns NullOrderStatus) Value() (driver.Value, error) {
+	if !ns.Valid {
+		return nil, nil
+	}
+	return ns.OrderStatus, nil
+}
+
+type Order struct {
+	ID          uuid.UUID
+	UserID      uuid.UUID
+	ProductID   uuid.UUID
+	Quantity    int32
+	Status      OrderStatus
+	Description string
+	CreatedAt   time.Time
+}
+
+type Product struct {
+	ID          uuid.UUID
+	Name        string
+	Price       sql.NullInt32
+	Stock       int32
+	IsService   bool
+	Description string
+	ImageUrl    string
+	CreatedAt   time.Time
+}
 
 type User struct {
 	ID           uuid.UUID
