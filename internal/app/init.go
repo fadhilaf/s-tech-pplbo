@@ -50,7 +50,9 @@ func (app *App) createHttpHandlers() *gin.Engine {
 	router.Static("/assets", "./internal/template/assets")
 	viewRouterGroup := router.Group("/")
 
+	router.Use(middleware.CheckInputData())
 	app.viewHandler(viewRouterGroup)
+
 	app.apiHandler(apiRouterGroup)
 
 	// >> mesin untuk menampilkan semua routes yang ada

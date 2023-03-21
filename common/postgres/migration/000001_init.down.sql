@@ -1,3 +1,2 @@
-DROP TABLE orders;
-DROP TABLE products;
-DROP TABLE users;
+DROP TABLE IF EXIST products;
+DROP TABLE IF EXIST users;

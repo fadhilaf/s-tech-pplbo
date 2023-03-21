@@ -1,6 +1,9 @@
 package delivery
 
 import (
+	"fmt"
+	"net/url"
+
 	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
@@ -19,6 +22,11 @@ func (handler *userHandler) CreateUser(ctx *gin.Context) {
 	// Gaya REST API
 	// ctx.JSON(res.Status, res)
 
+	//Gaya MVC
+	fmt.Println(res)
+
 	utils.SaveInputData(ctx, model.InputData{Message: res.Message})
-	ctx.Redirect(res.Status, "/register")
+
+	location := url.URL{Path: "/register"}
+	ctx.Redirect(res.Status, location.RequestURI())
 }
