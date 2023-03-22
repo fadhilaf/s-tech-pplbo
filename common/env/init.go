@@ -22,9 +22,6 @@ type Config struct {
 
 	// untuk cors siapo be yg boleh boleh akses (utk sekarang dak dipake) [cek be ck mano agek caro setting origin di gin gin-contrib/cors]
 	AllowedOrigin string `mapstructure:"ORIGIN"`
-
-	AdminEmail    string `mapstructure:"ADMIN_EMAIL"`
-	AdminPassword string `mapstructure:"ADMIN_PASSWORD"`
 }
 
 func LoadConfig(envPath string) Config {
