@@ -2,21 +2,21 @@ package usecase
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
-
-	"github.com/FadhilAF/s-tech-pplbo/config"
 )
 
 func (usecase *authUsecaseImpl) AdminLogin(req model.UserLoginRequest) model.WebServiceResponse {
-	config := config.LoadConfig(".env")
+	adminEmail := os.Getenv("ADMIN_EMAIL")
+	adminPassword := os.Getenv("ADMIN_PASSWORD")
 
-	if req.Email != config.AdminEmail {
+	if req.Email != adminEmail {
 		return utils.ToWebServiceResponse("Email salah", http.StatusUnauthorized, nil)
 	}
 
-	if req.Password != config.AdminPassword {
+	if req.Password != adminPassword {
 		return utils.ToWebServiceResponse("Password salah", http.StatusUnauthorized, nil)
 	}
 

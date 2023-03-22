@@ -1,21 +1,17 @@
 package middleware
 
 import (
-	"fmt"
-
-	"github.com/gin-contrib/sessions"
+	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func CheckUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		session := sessions.Default(c)
 
-		userId := session.Get("user_id")
+		userId := utils.GetUserIdFromSession(c)
 
-		fmt.Println("tersimpan user id:", userId)
-
-		if userId == nil {
+		if userId == uuid.Nil {
 			c.AbortWithStatus(401)
 		}
 
@@ -25,11 +21,10 @@ func CheckUser() gin.HandlerFunc {
 
 func CheckAdmin() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		session := sessions.Default(c)
 
-		isAdmin := session.Get("is_admin")
+		isAdmin := utils.GetAdminFromSession(c)
 
-		if isAdmin == nil {
+		if isAdmin == false {
 			c.AbortWithStatus(401)
 		}
 		c.Set("is_admin", isAdmin)

@@ -10,15 +10,12 @@ import (
 func (handler *viewHandler) RenderLogin(c *gin.Context) {
 	message := utils.GetResponse(c)
 
-	if message != "" {
-		utils.DeleteResponse(c)
+	// we'll need this later
+	userId := utils.GetUserIdFromSession(c)
 
-		c.HTML(http.StatusOK, "login.gohtml", gin.H{
-			"Message": message,
-		})
-	} else {
-		c.HTML(http.StatusOK, "login.gohtml", gin.H{
-			"Message": "",
-		})
-	}
+	utils.DeleteResponse(c)
+	c.HTML(http.StatusOK, "login.gohtml", gin.H{
+		"Message": message,
+		"User":    userId,
+	})
 }

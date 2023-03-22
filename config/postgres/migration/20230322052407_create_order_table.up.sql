@@ -1,4 +1,10 @@
-CREATE TYPE order_status AS ENUM ('pending', 'processing', 'delivered');
+DO $$
+  BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'order_status') THEN
+      CREATE TYPE order_status AS ENUM ('pending', 'processing', 'delivered');
+    END IF;
+  END
+$$;
 
 CREATE TABLE IF NOT EXISTS orders (
   id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),

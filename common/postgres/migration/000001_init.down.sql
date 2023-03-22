@@ -1,2 +1,0 @@
-DROP TABLE IF EXIST products;
-DROP TABLE IF EXIST users;

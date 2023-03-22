@@ -6,7 +6,7 @@ import (
 )
 
 // REST API
-func ToWebServiceResponse(message string, status int, data interface{}) model.WebServiceResponse {
+func ToWebServiceResponse(message string, status int, data gin.H) model.WebServiceResponse {
 	return model.WebServiceResponse{
 		Message: message,
 		Status:  status,

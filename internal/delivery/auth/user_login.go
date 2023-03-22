@@ -1,6 +1,10 @@
 package delivery
 
 import (
+	"fmt"
+	"net/http"
+	"net/url"
+
 	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
@@ -17,10 +21,34 @@ func (handler *authHandler) UserLogin(ctx *gin.Context) {
 
 	res := handler.usecase.UserLogin(req)
 
-	user, ok := res.Data.(model.User)
-	if ok {
-		utils.SaveUserToSession(ctx, user.ID)
+	// Gaya REST API
+	// ctx.JSON(res.Status, res)
+
+	// Gaya HTML
+	utils.SaveResponse(ctx, res.Message)
+
+	if res.Status == http.StatusOK {
+
 	}
 
-	ctx.JSON(res.Status, res)
+	var location url.URL
+	if res.Status == http.StatusOK {
+
+		//casting dari [interface{}]interface{} ke model.User
+		user, ok := res.Data["user"].(model.User)
+		if ok {
+			utils.SaveUserToSession(ctx, user.ID)
+		} else {
+			fmt.Println("error casting user to model.User")
+		}
+
+		location = url.URL{Path: "/"}
+
+	} else {
+
+		location = url.URL{Path: "/login"}
+
+	}
+
+	ctx.Redirect(http.StatusFound, location.RequestURI())
 }

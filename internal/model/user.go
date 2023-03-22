@@ -1,19 +1,15 @@
 package model
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 )
 
 type User struct {
-	ID           uuid.UUID `json:"id" db:"id"`
-	Email        string    `json:"email" db:"email"`
-	PasswordHash string    `json:"password" db:"password_hash"`
-	Name         string    `json:"name" db:"name"`
-	Address      string    `json:"address" db:"address"`
-	Phone        string    `json:"phone" db:"phone"`
-	CreatedAt    time.Time `json:"created_at" db:"created_at"`
+	ID      uuid.UUID `json:"id" db:"id"`
+	Name    string    `json:"name" db:"name"`
+	Email   string    `json:"email" db:"email"`
+	Address string    `json:"address" db:"address"`
+	Phone   string    `json:"phone" db:"phone"`
 }
 
 type CreateUserRequest struct {
@@ -31,7 +27,7 @@ type GetUserRequest struct {
 type UpdateUserRequest struct {
 	Name    string `json:"name" form:"name" binding:"required"`
 	Address string `json:"address" form:"address" binding:"required"`
-	Phone   string `json:"phone" form:"phone" binding:"required,e164"`
+	Phone   string `json:"phone" form:"phone" binding:"required"`
 }
 
 type DeleteUserRequest struct {

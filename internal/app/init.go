@@ -17,7 +17,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 
-	"github.com/FadhilAF/s-tech-pplbo/config"
+	"github.com/FadhilAF/s-tech-pplbo/common/env"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/middleware"
 
@@ -25,7 +25,7 @@ import (
 )
 
 type App struct {
-	Config   config.Config
+	Config   env.Config
 	delivery deliveries
 	usecase  usecases
 	db       *sql.DB
@@ -71,7 +71,7 @@ func (app *App) createHttpHandlers() *gin.Engine {
 }
 
 func (app *App) StartServer() {
-	if app.Config.Env == config.EnvProd {
+	if app.Config.Env == env.EnvProd {
 		fmt.Println(
 			color.Ize(color.Yellow, color.InBold("\nAPP RUN IN PRODUCTION MODE\n")),
 		)
@@ -116,7 +116,7 @@ func (app *App) StartServer() {
 	log.Println("Server exiting")
 }
 
-func New(config config.Config, db *sql.DB) App {
+func New(config env.Config, db *sql.DB) App {
 
 	app := App{}
 	app.Config = config

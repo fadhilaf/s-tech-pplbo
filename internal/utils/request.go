@@ -10,8 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
-
-	"fmt"
 )
 
 func BindWith(ctx *gin.Context, i interface{}, binding binding.Binding) bool {
@@ -30,9 +28,8 @@ func BindFormAndValidate(ctx *gin.Context, i interface{}) bool {
 
 	if err == nil {
 		return true
-	} else {
-		fmt.Println(err)
 	}
+
 	validate(ctx, err)
 	return false
 }

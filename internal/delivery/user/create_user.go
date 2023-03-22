@@ -25,6 +25,11 @@ func (handler *userHandler) CreateUser(ctx *gin.Context) {
 	// Gaya MVC
 	utils.SaveResponse(ctx, res.Message)
 
-	location := url.URL{Path: "/login"}
+	var location url.URL
+	if res.Status == http.StatusCreated {
+		location = url.URL{Path: "/login"}
+	} else {
+		location = url.URL{Path: "/register"}
+	}
 	ctx.Redirect(http.StatusFound, location.RequestURI())
 }

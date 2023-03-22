@@ -2,7 +2,8 @@ package middleware
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
+	"os"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/postgres"
@@ -10,9 +11,10 @@ import (
 )
 
 func SessionMiddleware(db *sql.DB) gin.HandlerFunc {
-	store, err := postgres.NewStore(db, []byte("secret"))
+	sessionKey := os.Getenv("APP_SESSION_KEY")
+	store, err := postgres.NewStore(db, []byte(sessionKey)) //bagusny ambil dari .env
 	if err != nil {
-		fmt.Println("Terjadi error dalam pembuatan session store", err)
+		log.Fatalf("Terjadi error dalam pembuatan session store: %v", err)
 	}
 
 	return sessions.Sessions("mysession", store)

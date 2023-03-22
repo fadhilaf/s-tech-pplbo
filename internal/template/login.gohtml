@@ -45,13 +45,13 @@
                 </a>
                 <form action="/api/auth/login" method="POST">
                   <div class="form-outline form-white mb-4 mt-4">
-                    <input style="background-color: #dfe9f5;" type="email" id="typeEmailX"
-                      class="form-control form-control-lg" placeholder="Username" />
+                    <input style="background-color: #dfe9f5;" type="email" name="email" id="typeEmailX"
+                      class="form-control form-control-lg" placeholder="Email" required />
                   </div>
 
                   <div class="form-outline form-white mb-4">
-                    <input style="background-color: #dfe9f5;" type="password" id="typePasswordX"
-                      class="form-control form-control-lg" placeholder="Password" />
+                    <input style="background-color: #dfe9f5;" type="password" name="password" id="typePasswordX"
+                      class="form-control form-control-lg" placeholder="Password" required />
                   </div>
 
                   {{if .Message}}

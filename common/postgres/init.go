@@ -27,13 +27,17 @@ func Start(dsn string) *sql.DB {
 	}
 	m, err := migrate.NewWithDatabaseInstance(
 		// ado yg template folder path ny "internal/template/blabla" ado jg yg "file://internal/template/blabla"
-		"file://common/postgres/migration",
+		"file://config/postgres/migration",
 		"postgres", driver)
 	if err != nil {
 		log.Fatalf("Error ketika melakukan migrasi database: %v", err)
 	}
 
-	m.Up() // or m.Step(2) if you want to explicitly set the number of migrations to run
+	//dio ni bakal di migrateny sesuai dengen kalo kito "golang-migrate/migrate create -ext sql -dir migration -seq create_users_table"
+	err = m.Up() // or m.Step(2) if you want to explicitly set the number of migrations to run
+	if err != nil && err != migrate.ErrNoChange {
+		log.Fatalf("Error ketika melakukan migrasi database: %v", err)
+	}
 
 	return db
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/FadhilAF/s-tech-pplbo/config"
+	"github.com/FadhilAF/s-tech-pplbo/common/env"
 
 	"github.com/FadhilAF/s-tech-pplbo/common/postgres"
 
@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	appConfig := config.LoadConfig(".env")
+	appConfig := env.LoadConfig(".env")
 
 	postgresDb := postgres.Start(appConfig.PostgresUrl)
 
