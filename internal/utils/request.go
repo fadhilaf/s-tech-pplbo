@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/FadhilAF/s-tech-pplbo/common/validations"
@@ -28,6 +29,8 @@ func BindFormAndValidate(ctx *gin.Context, i interface{}) bool {
 
 	if err == nil {
 		return true
+	} else {
+		fmt.Println("Error di validasi Form:", err)
 	}
 
 	validate(ctx, err)

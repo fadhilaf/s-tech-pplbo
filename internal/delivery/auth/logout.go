@@ -12,7 +12,7 @@ import (
 func (handler *authHandler) Logout(ctx *gin.Context) {
 	utils.RemoveAuthSession(ctx)
 
-	res := utils.ToWebServiceResponse("Logout success", http.StatusOK, nil)
+	res := utils.ToWebServiceResponse("Logout berhasil", http.StatusOK, nil)
 
 	//Gaya REST API
 	// ctx.JSON(res.Status, res)
@@ -20,6 +20,6 @@ func (handler *authHandler) Logout(ctx *gin.Context) {
 	//Gaya HTML
 	utils.SaveResponse(ctx, res.Message)
 
-	location := url.URL{Path: "/login"}
+	location := url.URL{Path: "/"}
 	ctx.Redirect(http.StatusFound, location.RequestURI())
 }

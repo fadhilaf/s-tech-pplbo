@@ -19,6 +19,11 @@ func (handler *authHandler) AdminLogin(ctx *gin.Context) {
 	}
 
 	res := handler.usecase.AdminLogin(req)
+	// Gaya REST API
+	// ctx.JSON(res.Status, res)
+
+	// Gaya HTML
+	utils.SaveResponse(ctx, res.Message)
 
 	var location url.URL
 	location = url.URL{Path: "/admin"}

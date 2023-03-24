@@ -13,6 +13,7 @@ type ViewDelivery interface {
 	RenderAdmin(ctx *gin.Context)
 	RenderDashboard(ctx *gin.Context)
 	RenderOrder(ctx *gin.Context)
+	RenderAdminOrder(ctx *gin.Context)
 	RenderTambah(ctx *gin.Context)
 }
 

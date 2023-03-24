@@ -39,29 +39,45 @@
             <div class="card-body p-5 text-center">
               <div class="mb-md-5 mt-md-4 mb-0">
                 <h2 class="fw-bold mb-3 text-uppercase">Tambah Barang</h2>
-                <div class="form-outline form-white mb-4 mt-4">
-                  <input style="background-color: #dfe9f5;" type="text" id="typeEmailX"
-                    class="form-control form-control-lg" placeholder="Nama Barang" />
-                </div>
-                <div class="form-outline form-white mb-4">
-                  <textarea style="background-color: #dfe9f5;" type="textbox" id="typePasswordX"
-                    class="form-control form-control-lg" placeholder="Deskripsi"></textarea>
-                </div>
-                <div class="form-outline form-white mb-4 mt-4">
-                  <input style="background-color: #dfe9f5;" type="number" id="typeEmailX"
-                    class="form-control form-control-lg" placeholder="Harga" />
-                </div>
-                <div class="form-outline form-white mb-4 mt-4">
-                  <input style="background-color: #dfe9f5;" type="number" id="typeEmailX"
-                    class="form-control form-control-lg" placeholder="Stock" />
-                </div>
-                <div class="form-outline form-white mb-4 mt-4">
-                  <input style="background-color: #dfe9f5;" type="file" id="typeEmailX"
-                    class="form-control form-control-lg" placeholder="Foto" />
-                </div>
-                <button class="btn btn-primary btn-lg px-5" type="submit">
-                  Tambah
-                </button>
+                <form action="/api/product" method="POST" enctype="multipart/form-data">
+                  <div class="form-outline form-white mb-4 mt-4">
+                    <input style="background-color: #dfe9f5;" type="text" id="name" name="name"
+                      class="form-control form-control-lg" placeholder="Nama Barang" />
+                  </div>
+                  <div class="form-outline form-white mb-4">
+                    <textarea style="background-color: #dfe9f5;" type="textbox" id="description" name="description"
+                      class="form-control form-control-lg" placeholder="Deskripsi"></textarea>
+                  </div>
+                  <div class="form-outline form-white mb-4 mt-4">
+                    <input style="background-color: #dfe9f5;" type="number" id="price" name="price"
+                      class="form-control form-control-lg" placeholder="Harga" />
+                  </div>
+                  <div class="form-outline form-white mb-4 mt-4">
+                    <input style="background-color: #dfe9f5;" type="number" id="stock" name="stock"
+                      class="form-control form-control-lg" placeholder="Stock" />
+                  </div>
+                  <div class="form-outline form-white mb-4 mt-4">
+                    <input style="background-color: #dfe9f5;" type="file" id="image" name="image"
+                      class="form-control form-control-lg" placeholder="Foto" />
+                  </div>
+                  <div class="form-outline form-white mb-4 mt-4">
+                    <p>Tipe Produk</p>
+                    <input id="barang" type="radio" name="is_service" value="false">
+                    <label for="barang">Barang</label>
+                    <input id="jasa" type="radio" name="is_service" value="true">
+                    <label for="jasa">Jasa</label>
+                  </div>
+
+                  {{if .Message}}
+                  <div class="alert alert-primary" role="alert">
+                    {{.Message}}
+                  </div>
+                  {{end}}
+
+                  <button class="btn btn-primary btn-lg px-5" type="submit">
+                    Tambah
+                  </button>
+                </form>
               </div>
             </div>
           </div>

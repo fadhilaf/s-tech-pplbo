@@ -22,6 +22,7 @@ type Querier interface {
 	GetOrders(ctx context.Context) ([]Order, error)
 	GetProduct(ctx context.Context) ([]Product, error)
 	GetProductById(ctx context.Context, id uuid.UUID) (Product, error)
+	GetProductByName(ctx context.Context, name string) (Product, error)
 	GetProductByQuery(ctx context.Context, name string) ([]Product, error)
 	GetUser(ctx context.Context) ([]GetUserRow, error)
 	GetUserByEmail(ctx context.Context, email string) (User, error)

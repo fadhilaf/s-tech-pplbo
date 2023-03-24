@@ -53,6 +53,13 @@
                     <input style="background-color: #dfe9f5;" type="password" name="password" id="typePasswordX"
                       class="form-control form-control-lg" placeholder="Password" required />
                   </div>
+
+                  {{if .Message}}
+                  <div class="alert alert-primary" role="alert">
+                    {{.Message}}
+                  </div>
+                  {{end}}
+
                   <button class="btn btn-primary btn-lg px-5" type="submit">
                     Masuk
                   </button>

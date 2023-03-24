@@ -14,7 +14,7 @@ import (
 
 const createProduct = `-- name: CreateProduct :execresult
 INSERT INTO products (
-  name, price, stock, is_service, description, image_url
+  name, price, stock, is_service, description, image
 ) VALUES (
   $1, $2, $3, $4, $5, $6
 )
@@ -22,11 +22,11 @@ INSERT INTO products (
 
 type CreateProductParams struct {
 	Name        string
-	Price       sql.NullInt32
+	Price       int32
 	Stock       int32
 	IsService   bool
 	Description string
-	ImageUrl    string
+	Image       string
 }
 
 func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (sql.Result, error) {
@@ -36,7 +36,7 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (s
 		arg.Stock,
 		arg.IsService,
 		arg.Description,
-		arg.ImageUrl,
+		arg.Image,
 	)
 }
 
@@ -51,7 +51,7 @@ func (q *Queries) DeleteProduct(ctx context.Context, id uuid.UUID) error {
 }
 
 const getProduct = `-- name: GetProduct :many
-SELECT id, name, price, stock, is_service, description, image_url, created_at FROM products
+SELECT id, name, price, stock, is_service, description, image, created_at FROM products
 ORDER BY name
 `
 
@@ -71,7 +71,7 @@ func (q *Queries) GetProduct(ctx context.Context) ([]Product, error) {
 			&i.Stock,
 			&i.IsService,
 			&i.Description,
-			&i.ImageUrl,
+			&i.Image,
 			&i.CreatedAt,
 		); err != nil {
 			return nil, err
@@ -88,7 +88,7 @@ func (q *Queries) GetProduct(ctx context.Context) ([]Product, error) {
 }
 
 const getProductById = `-- name: GetProductById :one
-SELECT id, name, price, stock, is_service, description, image_url, created_at FROM products
+SELECT id, name, price, stock, is_service, description, image, created_at FROM products
 WHERE id = $1 LIMIT 1
 `
 
@@ -102,14 +102,35 @@ func (q *Queries) GetProductById(ctx context.Context, id uuid.UUID) (Product, er
 		&i.Stock,
 		&i.IsService,
 		&i.Description,
-		&i.ImageUrl,
+		&i.Image,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
+const getProductByName = `-- name: GetProductByName :one
+SELECT id, name, price, stock, is_service, description, image, created_at FROM products
+WHERE name = $1 LIMIT 1
+`
+
+func (q *Queries) GetProductByName(ctx context.Context, name string) (Product, error) {
+	row := q.db.QueryRowContext(ctx, getProductByName, name)
+	var i Product
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Price,
+		&i.Stock,
+		&i.IsService,
+		&i.Description,
+		&i.Image,
 		&i.CreatedAt,
 	)
 	return i, err
 }
 
 const getProductByQuery = `-- name: GetProductByQuery :many
-SELECT id, name, price, stock, is_service, description, image_url, created_at FROM products
+SELECT id, name, price, stock, is_service, description, image, created_at FROM products
 WHERE name ILIKE $1
 ORDER BY name
 `
@@ -130,7 +151,7 @@ func (q *Queries) GetProductByQuery(ctx context.Context, name string) ([]Product
 			&i.Stock,
 			&i.IsService,
 			&i.Description,
-			&i.ImageUrl,
+			&i.Image,
 			&i.CreatedAt,
 		); err != nil {
 			return nil, err
@@ -152,17 +173,17 @@ UPDATE products SET
   price = $3,
   stock = $4,
   description = $5,
-  image_url = $6
+  image = $6
 WHERE id = $1
 `
 
 type UpdateProductParams struct {
 	ID          uuid.UUID
 	Name        string
-	Price       sql.NullInt32
+	Price       int32
 	Stock       int32
 	Description string
-	ImageUrl    string
+	Image       string
 }
 
 func (q *Queries) UpdateProduct(ctx context.Context, arg UpdateProductParams) (sql.Result, error) {
@@ -172,6 +193,6 @@ func (q *Queries) UpdateProduct(ctx context.Context, arg UpdateProductParams) (s
 		arg.Price,
 		arg.Stock,
 		arg.Description,
-		arg.ImageUrl,
+		arg.Image,
 	)
 }

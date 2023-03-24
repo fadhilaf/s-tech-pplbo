@@ -24,7 +24,7 @@ type CreateOrderParams struct {
 	UserID      uuid.UUID
 	ProductID   uuid.UUID
 	Quantity    int32
-	Status      OrderStatus
+	Status      interface{}
 	Description string
 }
 
@@ -113,7 +113,7 @@ WHERE id = $1
 
 type UpdateOrderParams struct {
 	ID          uuid.UUID
-	Status      OrderStatus
+	Status      interface{}
 	Description string
 }
 

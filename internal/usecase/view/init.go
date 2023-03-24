@@ -8,6 +8,7 @@ import (
 
 type ViewUsecase interface {
 	GetUserById(model.GetUserByIdRequest) model.WebServiceResponse
+	GetProduct() model.WebServiceResponse
 }
 
 var _ ViewUsecase = &viewUsecaseImpl{}

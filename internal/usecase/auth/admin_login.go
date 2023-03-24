@@ -1,14 +1,22 @@
 package usecase
 
 import (
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 )
 
 func (usecase *authUsecaseImpl) AdminLogin(req model.AdminLoginRequest) model.WebServiceResponse {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error ketika membaca .env: %s", err)
+	}
+
 	adminEmail := os.Getenv("ADMIN_EMAIL")
 	adminPassword := os.Getenv("ADMIN_PASSWORD")
 

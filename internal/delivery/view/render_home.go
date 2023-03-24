@@ -10,15 +10,23 @@ import (
 )
 
 func (handler *viewHandler) RenderHome(c *gin.Context) {
+	message := utils.GetResponse(c)
+
+	// Ambil data produk
+	resProduct := handler.usecase.GetProduct()
+	var products []model.Product
+	if resProduct.Status == http.StatusOK {
+		products, _ = resProduct.Data["products"].([]model.Product)
+	}
+
+	// Ambil data user
 	userId := utils.GetUserIdFromContext(c)
-
 	var name string
-
 	if userId != uuid.Nil {
-		res := handler.usecase.GetUserById(model.GetUserByIdRequest{ID: userId})
+		resUser := handler.usecase.GetUserById(model.GetUserByIdRequest{ID: userId})
 
-		if res.Status == http.StatusOK {
-			user, ok := res.Data["user"].(model.User)
+		if resUser.Status == http.StatusOK {
+			user, ok := resUser.Data["user"].(model.User)
 
 			if ok {
 				name = user.Name
@@ -27,6 +35,8 @@ func (handler *viewHandler) RenderHome(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "index.gohtml", gin.H{
-		"Name": name,
+		"Name":     name,
+		"Products": products,
+		"Message":  message,
 	})
 }

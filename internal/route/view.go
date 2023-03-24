@@ -21,5 +21,5 @@ func ViewRoutes(router *gin.RouterGroup, handler delivery.ViewDelivery) {
 	adminGroup := router.Group("/admin", middleware.ShouldAdmin())
 	adminGroup.GET("/tambah", handler.RenderTambah)
 	adminGroup.GET("/dashboard", handler.RenderDashboard)
-	// adminGroup.GET("/order", handler.RenderOrderAdmin)
+	adminGroup.GET("/order", handler.RenderAdminOrder)
 }
