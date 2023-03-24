@@ -43,18 +43,20 @@
                     <img src="https://i.ibb.co/FJVXfkp/S-TECH-1.png" alt="S-TECH" border="0" height="150px">
                   </div>
                 </a>
-                <div class="form-outline form-white mb-4 mt-4">
-                  <input style="background-color: #dfe9f5;" type="email" name="email" id="typeEmailX"
-                    class="form-control form-control-lg" placeholder="Email" required />
-                </div>
+                <form action="/api/auth/admin" method="POST">
+                  <div class="form-outline form-white mb-4 mt-4">
+                    <input style="background-color: #dfe9f5;" type="email" name="email" id="typeEmailX"
+                      class="form-control form-control-lg" placeholder="Email" required />
+                  </div>
 
-                <div class="form-outline form-white mb-4">
-                  <input style="background-color: #dfe9f5;" type="password" name="password" id="typePasswordX"
-                    class="form-control form-control-lg" placeholder="Password" required />
-                </div>
-                <button class="btn btn-primary btn-lg px-5" type="submit">
-                  Masuk
-                </button>
+                  <div class="form-outline form-white mb-4">
+                    <input style="background-color: #dfe9f5;" type="password" name="password" id="typePasswordX"
+                      class="form-control form-control-lg" placeholder="Password" required />
+                  </div>
+                  <button class="btn btn-primary btn-lg px-5" type="submit">
+                    Masuk
+                  </button>
+                </form>
               </div>
               <div>
                 <p class="mb-0">
