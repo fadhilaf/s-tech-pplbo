@@ -62,8 +62,8 @@
       <!-- 1 Row Product Card -->
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         {{ range $index, $product := .Products }}
-        {{ with $product }}
         <!-- Card Product -->
+        {{ with $product }}
         <div class="col mb-5">
           <div class="card">
             <!-- Product image-->
@@ -80,16 +80,17 @@
                 Rp {{ .Price }}
                 {{ end }}
               </div>
+              <p class="pt-2 card-text">Deskripsi: {{ .Description }}</p>
             </div>
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/product/{{ .ID }}"
-                  alt="{{ .Name }}">Beli</a></div>
+              <div class="text-center">Stok: {{ .Stock }} <a class="btn btn-outline-dark mt-auto"
+                  href="/beli?id={{ .ID }}" alt="{{ .Name }}">Beli</a></div>
             </div>
           </div>
         </div>
-        <!-- Card Product Selesai -->
         {{ end }}
+        <!-- Card Product Selesai -->
         {{ end }}
       </div>
       <!-- 1 Row Product Card Selesai -->

@@ -196,3 +196,18 @@ func (q *Queries) UpdateProduct(ctx context.Context, arg UpdateProductParams) (s
 		arg.Image,
 	)
 }
+
+const updateProductStock = `-- name: UpdateProductStock :execresult
+UPDATE products SET
+  stock = $2
+WHERE id = $1
+`
+
+type UpdateProductStockParams struct {
+	ID    uuid.UUID
+	Stock int32
+}
+
+func (q *Queries) UpdateProductStock(ctx context.Context, arg UpdateProductStockParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, updateProductStock, arg.ID, arg.Stock)
+}

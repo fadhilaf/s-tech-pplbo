@@ -31,6 +31,11 @@ UPDATE products SET
   image = $6
 WHERE id = $1;
 
+-- name: UpdateProductStock :execresult
+UPDATE products SET
+  stock = $2
+WHERE id = $1;
+
 -- name: DeleteProduct :exec
 DELETE FROM products
 WHERE id = $1;

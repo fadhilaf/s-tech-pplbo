@@ -8,6 +8,7 @@ import (
 
 type ViewUsecase interface {
 	GetUserById(model.GetUserByIdRequest) model.WebServiceResponse
+	GetOrderByUserId(model.GetOrderByUserIdRequest) model.WebServiceResponse
 	GetProduct() model.WebServiceResponse
 }
 
