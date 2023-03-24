@@ -8,7 +8,7 @@ import (
 	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 )
 
-func (usecase *authUsecaseImpl) AdminLogin(req model.UserLoginRequest) model.WebServiceResponse {
+func (usecase *authUsecaseImpl) AdminLogin(req model.AdminLoginRequest) model.WebServiceResponse {
 	adminEmail := os.Getenv("ADMIN_EMAIL")
 	adminPassword := os.Getenv("ADMIN_PASSWORD")
 

@@ -20,7 +20,7 @@ type CreateUserRequest struct {
 	Phone    string `json:"phone" form:"phone" binding:"required"`
 }
 
-type GetUserRequest struct {
+type GetUserByIdRequest struct {
 	ID uuid.UUID `json:"id" query:"id" binding:"required,uuid"`
 }
 

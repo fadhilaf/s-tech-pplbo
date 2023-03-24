@@ -6,27 +6,37 @@ import (
 	"github.com/google/uuid"
 )
 
-func CheckUser() gin.HandlerFunc {
+func SaveAndLoadSessionMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		userId := utils.GetUserIdFromSession(c)
 
-		if userId == uuid.Nil {
-			c.AbortWithStatus(401)
+		if userId != uuid.Nil {
+			c.Set("user_id", userId)
 		}
+		c.Set("is_admin", utils.GetAdminFromSession(c))
 
-		c.Set("user", userId)
 	}
 }
 
-func CheckAdmin() gin.HandlerFunc {
+func ShouldUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		userId := utils.GetUserIdFromContext(c)
 
-		isAdmin := utils.GetAdminFromSession(c)
-
-		if isAdmin == false {
-			c.AbortWithStatus(401)
+		if userId == uuid.Nil {
+			c.HTML(401, "401.gohtml", gin.H{})
+			c.Abort()
+			return
 		}
-		c.Set("is_admin", isAdmin)
+	}
+}
+
+func ShouldAdmin() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		isAdmin := utils.GetAdminFromContext(c)
+
+		if !isAdmin {
+			c.AbortWithStatusJSON(401, gin.H{"error": "Kamu harus admin untuk mengakses halaman ini"})
+			return
+		}
 	}
 }

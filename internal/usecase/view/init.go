@@ -2,9 +2,12 @@ package usecase
 
 import (
 	"github.com/FadhilAF/s-tech-pplbo/internal/repository"
+
+	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 )
 
 type ViewUsecase interface {
+	GetUserById(model.GetUserByIdRequest) model.WebServiceResponse
 }
 
 var _ ViewUsecase = &viewUsecaseImpl{}

@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 
@@ -10,18 +11,22 @@ import (
 )
 
 func (handler *authHandler) AdminLogin(ctx *gin.Context) {
-	var req model.UserLoginRequest
+	var req model.AdminLoginRequest
 
 	ok := utils.BindFormAndValidate(ctx, &req)
 	if !ok {
 		return
 	}
 
-	res := handler.usecase.UserLogin(req)
+	res := handler.usecase.AdminLogin(req)
+
+	var location url.URL
+	location = url.URL{Path: "/admin"}
 
 	if res.Status == http.StatusOK {
 		utils.SaveAdminToSession(ctx, true)
+		location = url.URL{Path: "/admin/dashboard"}
 	}
 
-	ctx.JSON(res.Status, res)
+	ctx.Redirect(http.StatusFound, location.RequestURI())
 }

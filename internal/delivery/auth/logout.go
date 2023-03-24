@@ -1,8 +1,10 @@
 package delivery
 
 import (
-	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 	"net/http"
+	"net/url"
+
+	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,5 +14,12 @@ func (handler *authHandler) Logout(ctx *gin.Context) {
 
 	res := utils.ToWebServiceResponse("Logout success", http.StatusOK, nil)
 
-	ctx.JSON(res.Status, res)
+	//Gaya REST API
+	// ctx.JSON(res.Status, res)
+
+	//Gaya HTML
+	utils.SaveResponse(ctx, res.Message)
+
+	location := url.URL{Path: "/login"}
+	ctx.Redirect(http.StatusFound, location.RequestURI())
 }

@@ -26,18 +26,28 @@ func SaveUserToSession(c *gin.Context, id uuid.UUID) {
 	if err != nil {
 		fmt.Println("error session save:", err)
 	}
-
-	// fmt.Println("user id yg dimasukkan adalah:", idString)
 }
 
 func GetUserIdFromSession(c *gin.Context) uuid.UUID {
 	session := sessions.Default(c)
 
-	userId, ok := session.Get("user_id").(string)
-	if ok {
-		parsedUserId, err := uuid.Parse(userId)
+	userId := session.Get("user_id")
+	if userId != nil {
+		parsedUserId, err := uuid.Parse(userId.(string))
+
 		if err == nil {
-			// fmt.Println("tersimpan user id:", userId)
+			return parsedUserId
+
+		}
+	}
+	return uuid.Nil
+}
+
+func GetUserIdFromContext(c *gin.Context) uuid.UUID {
+	userId, exist := c.Get("user_id")
+	if exist {
+		parsedUserId, ok := userId.(uuid.UUID)
+		if ok {
 			return parsedUserId
 		}
 	}
@@ -70,14 +80,23 @@ func GetAdminFromSession(c *gin.Context) bool {
 	}
 }
 
+func GetAdminFromContext(c *gin.Context) bool {
+	isAdmin, exist := c.Get("is_admin")
+	if exist {
+		return isAdmin.(bool)
+	}
+	return false
+}
+
 func RemoveAuthSession(c *gin.Context) {
 	session := sessions.Default(c)
-	if session.Get("user") != nil {
-		session.Delete("user")
+	if session.Get("user_id") != nil {
+		session.Delete("user_id")
 	}
 
 	if session.Get("is_admin") != nil {
 		session.Delete("is_admin")
 	}
+
 	session.Save()
 }

@@ -10,15 +10,7 @@ import (
 func (handler *viewHandler) RenderAdmin(c *gin.Context) {
 	message := utils.GetResponse(c)
 
-	if message != "" {
-		utils.DeleteResponse(c)
-
-		c.HTML(http.StatusOK, "admin.gohtml", gin.H{
-			"Message": message,
-		})
-	} else {
-		c.HTML(http.StatusOK, "admin.gohtml", gin.H{
-			"Message": "",
-		})
-	}
+	c.HTML(http.StatusOK, "admin.gohtml", gin.H{
+		"Message": message,
+	})
 }

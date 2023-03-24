@@ -26,9 +26,6 @@ func GetResponse(c *gin.Context) string {
 		return ""
 	}
 
-	return cookie
-}
-
-func DeleteResponse(c *gin.Context) {
 	c.SetCookie("response", "", -1, "/", "localhost", false, true)
+	return cookie
 }

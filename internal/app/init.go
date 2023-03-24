@@ -42,17 +42,21 @@ func (app *App) createHttpHandlers() *gin.Engine {
 	router.Use(cors.New(corsCfg))
 
 	router.Use(middleware.SessionMiddleware(app.db))
+	router.Use(middleware.SaveAndLoadSessionMiddleware())
 
 	apiRouterGroup := router.Group("/api")
+	app.apiHandler(apiRouterGroup)
 
 	// ado yg template folder path ny "internal/template/blabla" ado jg yg "file://internal/template/blabla"
 	router.LoadHTMLGlob("internal/template/*.gohtml")
 	router.Static("/assets", "./internal/template/assets")
-	viewRouterGroup := router.Group("/")
 
+	viewRouterGroup := router.Group("/")
 	app.viewHandler(viewRouterGroup)
 
-	app.apiHandler(apiRouterGroup)
+	router.NoRoute(func(c *gin.Context) {
+		c.HTML(http.StatusNotFound, "404.gohtml", gin.H{})
+	})
 
 	// >> mesin untuk menampilkan semua routes yang ada
 	routes := router.Routes()

@@ -1,7 +1,6 @@
 package delivery
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 
@@ -27,27 +26,16 @@ func (handler *authHandler) UserLogin(ctx *gin.Context) {
 	// Gaya HTML
 	utils.SaveResponse(ctx, res.Message)
 
-	if res.Status == http.StatusOK {
-
-	}
-
 	var location url.URL
-	if res.Status == http.StatusOK {
+	location = url.URL{Path: "/login"}
 
+	if res.Status == http.StatusOK {
 		//casting dari [interface{}]interface{} ke model.User
 		user, ok := res.Data["user"].(model.User)
 		if ok {
 			utils.SaveUserToSession(ctx, user.ID)
-		} else {
-			fmt.Println("error casting user to model.User")
+			location = url.URL{Path: "/"}
 		}
-
-		location = url.URL{Path: "/"}
-
-	} else {
-
-		location = url.URL{Path: "/login"}
-
 	}
 
 	ctx.Redirect(http.StatusFound, location.RequestURI())
