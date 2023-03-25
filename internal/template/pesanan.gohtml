@@ -35,41 +35,36 @@
     <div class="container py-5">
       <div class="row d-flex justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <h3 class="fw-bold mb-3 text-center text-white">Nomor Whatsapp Admin S-TECH: {{ .AdminPhone }}</h3>
           <h2 class="fw-bold mb-3 text-uppercase text-center text-white">
             Pesanan anda
           </h2>
-          <div class="card" style="border-radius: 1rem">
-            <div class="card-body">
-              <p class="mb-0">Id : 000001</p>
-              <p class="mb-0">Nama Barang: ASUS ROG</p>
-              <p class="mb-0">Jumlah : 1</p>
-              <button class="btn btn-sm btn-primary mt-2">Lihat</button>
-            </div>
-          </div>
+          {{ range $index, $order := .Orders }}
+          {{ with $order }}
           <div class="card mt-3" style="border-radius: 1rem">
             <div class="card-body">
-              <p class="mb-0">Id : 000001</p>
-              <p class="mb-0">Nama Barang: ASUS ROG</p>
-              <p class="mb-0">Jumlah : 1</p>
-              <button class="btn btn-sm btn-primary mt-2">Lihat</button>
+              <p class="mb-0">Id Pesanan: {{ .ID }}</p>
+              <p class="mb-0">Id Produk: {{ .ProductID }}</p>
+              <p class="mb-0">Nama Produk: {{ .ProductName }}</p>
+              {{ if ne .IsService true }}
+              <p class="mb-0">Kuantitas pemesanan : {{ .Quantity }}</p>
+              {{ end }}
+              <p class="mb-0">Status pemesanan : {{ .Status }}</p>
+              <p class="mb-0">Deskripsi pemesanan : {{ .Description }}</p>
+
+              <div>
+                <!-- <button class="btn btn-sm btn-primary mt-2">Lihat</button> -->
+                {{ if eq .Status "processing" }}
+                <form action="/order/delivered" method="POST">
+                  <input type="hidden" name="order_id" value={{ .ID }} />
+                  <button class="btn btn-sm btn-success mt-2">Diterima</button>
+                </form>
+                {{ end }}
+              </div>
             </div>
           </div>
-          <div class="card mt-3" style="border-radius: 1rem">
-            <div class="card-body">
-              <p class="mb-0">Id : 000001</p>
-              <p class="mb-0">Nama Barang: ASUS ROG</p>
-              <p class="mb-0">Jumlah : 1</p>
-              <button class="btn btn-sm btn-primary mt-2">Lihat</button>
-            </div>
-          </div>
-          <div class="card mt-3" style="border-radius: 1rem">
-            <div class="card-body">
-              <p class="mb-0">Id : 000001</p>
-              <p class="mb-0">Nama Barang: ASUS ROG</p>
-              <p class="mb-0">Jumlah : 1</p>
-              <button class="btn btn-sm btn-primary mt-2">Lihat</button>
-            </div>
-          </div>
+          {{ end }}
+          {{ end }}
         </div>
       </div>
     </div>

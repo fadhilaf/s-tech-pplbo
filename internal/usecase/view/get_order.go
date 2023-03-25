@@ -35,12 +35,13 @@ func (usecase *viewUsecaseImpl) GetOrder() model.WebServiceResponse {
 			ID:           order.ID,
 			ProductID:    product.ID,
 			ProductName:  product.Name,
+			IsService:    product.IsService,
 			BuyerID:      user.ID,
 			BuyerName:    user.Name,
 			BuyerAddress: user.Address,
 			BuyerPhone:   user.Phone,
 			Quantity:     order.Quantity,
-			Status:       order.Status.(string),
+			Status:       string(order.Status.([]uint8)),
 			Description:  order.Description,
 		}
 	}

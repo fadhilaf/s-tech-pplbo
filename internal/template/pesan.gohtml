@@ -61,42 +61,49 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                      <div class="text-center">Stok: {{ .Stock }}</div>
+                      <div class="text-center">Stok:
+                        {{ if .IsService }}
+                        Kuota: {{ .Stock }} Tim
+                        {{ else }}
+                        Stok: {{ .Stock }} Unit
+                        {{ end }}
+                      </div>
                     </div>
                   </div>
                 </div>
-                {{ end }}
-                <!-- Card Product Selesai -->
-                <form action="/api/order" method="POST">
-                  <input type="hidden" id="product_id" name="product_id" value={{ .Product.ID }}>
-                  {{ if .Product.IsService }}
-                  <input type="hidden" id="quantity" name="quantity" value="1" />
-                  {{ else }}
-                  <div class="form-outline form-white mb-4 mt-4">
-                    <input style="background-color: #dfe9f5;" type="number" id="quantity" name="quantity"
-                      class="form-control form-control-lg" placeholder="Kuantitas pemesanan" />
-                  </div>
-                  {{ end }}
-                  <div class="form-outline form-white mb-4">
-                    <textarea style="background-color: #dfe9f5;" type="textbox" id="description" name="description"
-                      class="form-control form-control-lg" placeholder="Deskripsi pemesanan"></textarea>
-                  </div>
-
-                  {{if .Message}}
-                  <div class="alert alert-primary" role="alert">
-                    {{.Message}}
-                  </div>
-                  {{end}}
-
-                  <button class="btn btn-primary btn-lg px-5" type="submit">
-                    Pesan
-                  </button>
-                </form>
               </div>
+              {{ end }}
+              <!-- Card Product Selesai -->
+              <form action="/api/order" method="POST">
+                <input type="hidden" id="product_id" name="product_id" value={{ .Product.ID }}>
+                {{ if .Product.IsService }}
+                <input type="hidden" id="quantity" name="quantity" value="1" />
+                {{ else }}
+                <div class="form-outline form-white mb-4 mt-4">
+                  <input style="background-color: #dfe9f5;" type="number" id="quantity" name="quantity"
+                    class="form-control form-control-lg" placeholder="Kuantitas pemesanan" />
+                </div>
+                {{ end }}
+                <div class="form-outline form-white mb-4">
+                  <textarea style="background-color: #dfe9f5;" type="textbox" id="description" name="description"
+                    class="form-control form-control-lg" placeholder="Deskripsi pemesanan"></textarea>
+                </div>
+
+                {{if .Message}}
+                <div class="alert alert-primary" role="alert">
+                  {{.Message}}
+                </div>
+                {{end}}
+
+                <button class="btn btn-primary btn-lg px-5" type="submit">
+                  Pesan
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </section>
 </body>

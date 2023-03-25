@@ -46,7 +46,7 @@ func (handler *orderHandler) CreateOrder(ctx *gin.Context) {
 	// Gaya MVC
 
 	var location url.URL
-	location = url.URL{Path: "/beli", RawQuery: "id=" + reqForm.ProductID}
+	location = url.URL{Path: "/pesan", RawQuery: "id=" + reqForm.ProductID}
 
 	if res.Status == http.StatusCreated {
 		location = url.URL{Path: "/pesanan"}

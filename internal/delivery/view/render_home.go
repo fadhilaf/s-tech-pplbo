@@ -23,20 +23,21 @@ func (handler *viewHandler) RenderHome(c *gin.Context) {
 	userId := utils.GetUserIdFromContext(c)
 	var name string
 	if userId != uuid.Nil {
+
 		resUser := handler.usecase.GetUserById(model.GetUserByIdRequest{ID: userId})
-
 		if resUser.Status == http.StatusOK {
-			user, ok := resUser.Data["user"].(model.User)
 
+			user, ok := resUser.Data["user"].(model.User)
 			if ok {
+
 				name = user.Name
 			}
 		}
 	}
 
 	c.HTML(http.StatusOK, "index.gohtml", gin.H{
+		"Message":  message,
 		"Name":     name,
 		"Products": products,
-		"Message":  message,
 	})
 }

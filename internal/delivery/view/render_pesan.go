@@ -14,17 +14,19 @@ func (handler *viewHandler) RenderPesan(c *gin.Context) {
 
 	// Ambil data user
 	userId := utils.GetUserIdFromContext(c)
+	if userId == uuid.Nil {
+		return
+	}
+
+	resUser := handler.usecase.GetUserById(model.GetUserByIdRequest{ID: userId})
+	if resUser.Status != http.StatusOK {
+		return
+	}
+	user, ok := resUser.Data["user"].(model.User)
+
 	var name string
-	if userId != uuid.Nil {
-		resUser := handler.usecase.GetUserById(model.GetUserByIdRequest{ID: userId})
-
-		if resUser.Status == http.StatusOK {
-			user, ok := resUser.Data["user"].(model.User)
-
-			if ok {
-				name = user.Name
-			}
-		}
+	if ok {
+		name = user.Name
 	}
 
 	// Ambil data product

@@ -1,8 +1,8 @@
 -- name: CreateOrder :execresult
 INSERT INTO orders (
-  user_id, product_id, quantity, status, description
+  user_id, product_id, quantity, description
 ) VALUES (
-  $1, $2, $3, $4, $5
+  $1, $2, $3, $4
 );
 
 -- name: GetOrders :many

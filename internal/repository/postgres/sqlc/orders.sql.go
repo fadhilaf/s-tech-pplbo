@@ -14,9 +14,9 @@ import (
 
 const createOrder = `-- name: CreateOrder :execresult
 INSERT INTO orders (
-  user_id, product_id, quantity, status, description
+  user_id, product_id, quantity, description
 ) VALUES (
-  $1, $2, $3, $4, $5
+  $1, $2, $3, $4
 )
 `
 
@@ -24,7 +24,6 @@ type CreateOrderParams struct {
 	UserID      uuid.UUID
 	ProductID   uuid.UUID
 	Quantity    int32
-	Status      interface{}
 	Description string
 }
 
@@ -33,7 +32,6 @@ func (q *Queries) CreateOrder(ctx context.Context, arg CreateOrderParams) (sql.R
 		arg.UserID,
 		arg.ProductID,
 		arg.Quantity,
-		arg.Status,
 		arg.Description,
 	)
 }

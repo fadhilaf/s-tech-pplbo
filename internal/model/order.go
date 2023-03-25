@@ -8,6 +8,7 @@ type Order struct {
 	ID           uuid.UUID
 	ProductID    uuid.UUID
 	ProductName  string
+	IsService    bool
 	BuyerID      uuid.UUID
 	BuyerName    string
 	BuyerAddress string

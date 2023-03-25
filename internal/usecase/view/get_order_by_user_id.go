@@ -26,22 +26,14 @@ func (usecase *viewUsecaseImpl) GetOrderByUserId(req model.GetOrderByUserIdReque
 			return utils.ToWebServiceResponse("Product tidak ditemukan di database", http.StatusNotFound, nil)
 		}
 
-		user, err := usecase.Store.GetUserById(context.Background(), order.UserID)
-		if err != nil {
-			return utils.ToWebServiceResponse("User tidak ditemukan di database", http.StatusNotFound, nil)
-		}
-
 		orders[i] = model.Order{
-			ID:           order.ID,
-			ProductID:    product.ID,
-			ProductName:  product.Name,
-			BuyerID:      user.ID,
-			BuyerName:    user.Name,
-			BuyerAddress: user.Address,
-			BuyerPhone:   user.Phone,
-			Quantity:     order.Quantity,
-			Status:       order.Status.(string),
-			Description:  order.Description,
+			ID:          order.ID,
+			ProductID:   product.ID,
+			ProductName: product.Name,
+			IsService:   product.IsService,
+			Quantity:    order.Quantity,
+			Status:      string(order.Status.([]uint8)),
+			Description: order.Description,
 		}
 	}
 
