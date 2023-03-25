@@ -16,10 +16,11 @@ func ViewRoutes(router *gin.RouterGroup, handler delivery.ViewDelivery) {
 	// router.GET("/blabla", middleware1, middleware2) // biso ck ini jg dibuatny
 
 	userGroup := router.Group("/", middleware.ShouldUser())
-	userGroup.GET("/order", handler.RenderOrder)
+	userGroup.GET("/pesan", handler.RenderPesan)
+	userGroup.GET("/pesanan", handler.RenderPesanan)
 
 	adminGroup := router.Group("/admin", middleware.ShouldAdmin())
 	adminGroup.GET("/tambah", handler.RenderTambah)
 	adminGroup.GET("/dashboard", handler.RenderDashboard)
-	adminGroup.GET("/order", handler.RenderAdminOrder)
+	adminGroup.GET("/pesanan", handler.RenderAdminPesanan)
 }

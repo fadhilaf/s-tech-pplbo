@@ -67,7 +67,7 @@
         <div class="col mb-5">
           <div class="card">
             <!-- Product image-->
-            <img class="card-img-top" src="/assets/img/{{ .Image }}" alt="..." />
+            <img class="card-img-top" src="/assets/img/{{ .Image }}" alt="{{ .Name }}" />
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">
@@ -84,8 +84,16 @@
             </div>
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">Stok: {{ .Stock }} <a class="btn btn-outline-dark mt-auto"
-                  href="/beli?id={{ .ID }}" alt="{{ .Name }}">Beli</a></div>
+              <div class="text-center">
+                {{ if .IsService }}
+                Kuota: {{ .Stock }} Tim
+                {{ else }}
+                Stok: {{ .Stock }} Unit
+                {{ end }}
+                <a class="btn btn-outline-dark mt-auto" href="/pesan?id={{ .ID }}" alt="{{ .Name }}">
+                  Pesan
+                </a>
+              </div>
             </div>
           </div>
         </div>

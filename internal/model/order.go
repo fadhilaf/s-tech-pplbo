@@ -18,14 +18,17 @@ type Order struct {
 }
 
 type CreateOrderFormRequest struct {
-	ProductID   uuid.UUID `json:"product_id" form:"product_id" binding:"required"`
-	Quantity    int32     `json:"quantity" form:"quantity" binding:"required"`
-	Description string    `json:"description" form:"description" binding:"required"`
+	// di struct untuk bind request, dak biso pake data type uuid.UUID, harus pake string. validasi uuid nyo tetep ado di bagian binding itu
+	ProductID   string `json:"product_id" form:"product_id" binding:"required,uuid"`
+	Quantity    int32  `json:"quantity" form:"quantity" binding:"required"`
+	Description string `json:"description" form:"description" binding:"required"`
 }
 
 type CreateOrderRequest struct {
-	Form   CreateOrderFormRequest
-	UserID uuid.UUID
+	UserID      uuid.UUID
+	ProductID   uuid.UUID
+	Quantity    int32
+	Description string
 }
 
 type GetOrderByUserIdRequest struct {

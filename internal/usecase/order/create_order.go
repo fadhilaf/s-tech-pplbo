@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 
 	"net/http"
 
@@ -13,28 +14,29 @@ import (
 )
 
 func (usecase *orderUsecaseImpl) CreateOrder(req model.CreateOrderRequest) model.WebServiceResponse {
-	product, err := usecase.Store.GetProductById(context.Background(), req.Form.ProductID)
+	product, err := usecase.Store.GetProductById(context.Background(), req.ProductID)
 	if err != nil {
 		return utils.ToWebServiceResponse("Produk tidak ditemukan", http.StatusNotFound, nil)
 	}
 
-	if product.Stock < req.Form.Quantity {
+	if product.Stock < req.Quantity {
 		return utils.ToWebServiceResponse("Stok produk tidak mencukupi", http.StatusBadRequest, nil)
 	}
 
 	order, err := usecase.Store.CreateOrder(context.Background(), repositoryModel.CreateOrderParams{
 		UserID:      req.UserID,
-		ProductID:   req.Form.ProductID,
-		Quantity:    req.Form.Quantity,
-		Description: req.Form.Description,
+		ProductID:   req.ProductID,
+		Quantity:    req.Quantity,
+		Description: req.Description,
 	})
 	if err != nil {
+		fmt.Println(err)
 		return utils.ToWebServiceResponse("Gagal memasukkan order ke database", http.StatusInternalServerError, nil)
 	}
 
 	updatedProduct, err := usecase.Store.UpdateProductStock(context.Background(), repositoryModel.UpdateProductStockParams{
-		ID:    req.Form.ProductID,
-		Stock: product.Stock - req.Form.Quantity,
+		ID:    req.ProductID,
+		Stock: product.Stock - req.Quantity,
 	})
 	if err != nil {
 		return utils.ToWebServiceResponse("Gagal mengganti stok produk ke database", http.StatusInternalServerError, nil)

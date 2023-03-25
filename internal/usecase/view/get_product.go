@@ -15,7 +15,7 @@ import (
 func (usecase *viewUsecaseImpl) GetProduct() model.WebServiceResponse {
 	productsDb, err := usecase.Store.GetProduct(context.Background())
 	if err != nil {
-		return utils.ToWebServiceResponse("User tidak ditemukan", http.StatusNotFound, nil)
+		return utils.ToWebServiceResponse("Product tidak ditemukan", http.StatusNotFound, nil)
 	}
 
 	products := make([]model.Product, len(productsDb))
@@ -32,7 +32,7 @@ func (usecase *viewUsecaseImpl) GetProduct() model.WebServiceResponse {
 		}
 	}
 
-	return utils.ToWebServiceResponse("Berhasil mendapatkan user", http.StatusOK, gin.H{
+	return utils.ToWebServiceResponse("Berhasil mendapatkan products", http.StatusOK, gin.H{
 		"products": products,
 	})
 }

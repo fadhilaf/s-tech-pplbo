@@ -77,8 +77,14 @@
             </div>
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">Stok: {{ .Stock }} <a class="btn btn-outline-dark mt-auto" href="#"
-                  alt="{{ .Name }}">Edit</a></div>
+              <div class="text-center">
+                {{ if .IsService }}
+                Kuota: {{ .Stock }} Tim
+                {{ else }}
+                Stok: {{ .Stock }} Unit
+                {{ end }}
+                <a class="btn btn-outline-dark mt-auto" href="#" alt="{{ .Name }}">Edit</a>
+              </div>
             </div>
           </div>
         </div>

@@ -26,3 +26,11 @@ type CreateProductRequest struct {
 	NotFile CreateProductNoFileRequest
 	Image   string
 }
+
+type GetProductByIdRequest struct {
+	ID uuid.UUID
+}
+
+type GetProductByKeywordRequest struct {
+	Keyword string
+}

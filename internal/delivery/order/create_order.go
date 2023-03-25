@@ -19,6 +19,12 @@ func (handler *orderHandler) CreateOrder(ctx *gin.Context) {
 		return
 	}
 
+	//convert productId dari string ke uuid
+	productId, err := uuid.Parse(reqForm.ProductID)
+	if err != nil {
+		return
+	}
+
 	// Ambil data user
 	userId := utils.GetUserIdFromContext(ctx)
 	if userId == uuid.Nil {
@@ -26,10 +32,11 @@ func (handler *orderHandler) CreateOrder(ctx *gin.Context) {
 	}
 
 	req := model.CreateOrderRequest{
-		UserID: userId,
-		Form:   reqForm,
+		UserID:      userId,
+		ProductID:   productId,
+		Quantity:    reqForm.Quantity,
+		Description: reqForm.Description,
 	}
-
 	res := handler.usecase.CreateOrder(req)
 	utils.SaveResponse(ctx, res.Message)
 
@@ -39,10 +46,11 @@ func (handler *orderHandler) CreateOrder(ctx *gin.Context) {
 	// Gaya MVC
 
 	var location url.URL
-	location = url.URL{Path: "/buy", RawQuery: "id=" + reqForm.ProductID.String()}
+	location = url.URL{Path: "/beli", RawQuery: "id=" + reqForm.ProductID}
 
 	if res.Status == http.StatusCreated {
-		location = url.URL{Path: "/order"}
+		location = url.URL{Path: "/pesanan"}
 	}
+
 	ctx.Redirect(http.StatusFound, location.RequestURI())
 }

@@ -9,5 +9,5 @@ import (
 
 func OrderRoutes(router *gin.RouterGroup, handler delivery.OrderDelivery) {
 	userRoutes := router.Group("/", middleware.ShouldUser())
-	userRoutes.POST("/buy", handler.CreateOrder)
+	userRoutes.POST("/", handler.CreateOrder)
 }

@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS orders (
   user_id uuid NOT NULL,
   product_id uuid NOT NULL,
   quantity integer NOT NULL,
-  status order_status NOT NULL DEFAULT 'pending',
+  status order_status DEFAULT 'pending',
   description varchar(255) NOT NULL,
   created_at timestamp NOT NULL DEFAULT (NOW()),
   FOREIGN KEY (user_id) REFERENCES users(id),

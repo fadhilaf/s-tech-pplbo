@@ -19,7 +19,6 @@ func BindWith(ctx *gin.Context, i interface{}, binding binding.Binding) bool {
 	if err == nil {
 		return true
 	}
-
 	validate(ctx, err)
 	return false
 }
