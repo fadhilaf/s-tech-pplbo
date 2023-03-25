@@ -7,6 +7,8 @@ import (
 
 type OrderUsecase interface {
 	CreateOrder(model.CreateOrderRequest) model.WebServiceResponse
+	ProcessingOrder(model.UpdateOrderStatusProcessingRequest) model.WebServiceResponse
+	DeliveredOrder(model.UpdateOrderStatusDeliveredRequest) model.WebServiceResponse
 }
 
 var _ OrderUsecase = &orderUsecaseImpl{}

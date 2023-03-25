@@ -7,6 +7,8 @@ import (
 
 type OrderDelivery interface {
 	CreateOrder(ctx *gin.Context)
+	DeliveredOrder(ctx *gin.Context)
+	ProcessingOrder(ctx *gin.Context)
 }
 
 var _ OrderDelivery = &orderHandler{}

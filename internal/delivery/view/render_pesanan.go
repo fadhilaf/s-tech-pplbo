@@ -13,6 +13,8 @@ import (
 )
 
 func (handler *viewHandler) RenderPesanan(c *gin.Context) {
+	message := utils.GetResponse(c)
+
 	// Ambil data user
 	userId := utils.GetUserIdFromContext(c)
 	if userId == uuid.Nil {
@@ -45,6 +47,7 @@ func (handler *viewHandler) RenderPesanan(c *gin.Context) {
 	adminPhone := os.Getenv("ADMIN_PHONE")
 
 	c.HTML(http.StatusOK, "pesanan.gohtml", gin.H{
+		"Message":    message,
 		"Name":       name,
 		"AdminPhone": adminPhone,
 		"Orders":     orders,

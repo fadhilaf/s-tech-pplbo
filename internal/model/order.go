@@ -4,6 +4,12 @@ import (
 	"github.com/google/uuid"
 )
 
+const (
+	OrderStatusPending    string = "pending"
+	OrderStatusProcessing string = "processing"
+	OrderStatusDelivered  string = "delivered"
+)
+
 type Order struct {
 	ID           uuid.UUID
 	ProductID    uuid.UUID
@@ -33,5 +39,18 @@ type CreateOrderRequest struct {
 }
 
 type GetOrderByUserIdRequest struct {
+	UserID uuid.UUID
+}
+
+type UpdateOrderStatusFormRequest struct {
+	ID string `json:"id" form:"id" binding:"required,uuid"`
+}
+
+type UpdateOrderStatusProcessingRequest struct {
+	ID uuid.UUID
+}
+
+type UpdateOrderStatusDeliveredRequest struct {
+	ID     uuid.UUID
 	UserID uuid.UUID
 }

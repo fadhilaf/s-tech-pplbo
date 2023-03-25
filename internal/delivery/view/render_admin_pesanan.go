@@ -4,10 +4,13 @@ import (
 	"net/http"
 
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
+	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func (handler *viewHandler) RenderAdminPesanan(c *gin.Context) {
+	message := utils.GetResponse(c)
+
 	// Ambil data pesanan
 	resOrder := handler.usecase.GetOrder()
 	var orders []model.Order
@@ -16,6 +19,7 @@ func (handler *viewHandler) RenderAdminPesanan(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "admin_pesanan.gohtml", gin.H{
-		"Orders": orders,
+		"Message": message,
+		"Orders":  orders,
 	})
 }
