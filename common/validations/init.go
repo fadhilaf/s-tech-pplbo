@@ -13,7 +13,6 @@ var customMessages map[string]string
 
 func InitValidations(validate *validator.Validate) {
 	customMessages = map[string]string{}
-	registerCustomMessages()
 
 	customErrors = map[string]func(validator.FieldError, string) string{}
 	registerCustomErrors()
