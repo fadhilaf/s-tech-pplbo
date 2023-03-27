@@ -24,7 +24,7 @@ func (usecase *viewUsecaseImpl) GetProduct() model.WebServiceResponse {
 		products[i] = model.Product{
 			ID:          product.ID,
 			Name:        product.Name,
-			Price:       product.Price,
+			Price:       utils.AddCommas(int(product.Price)),
 			Stock:       product.Stock,
 			IsService:   product.IsService,
 			Description: product.Description,

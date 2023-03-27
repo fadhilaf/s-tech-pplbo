@@ -11,15 +11,20 @@ import (
 func (handler *viewHandler) RenderDashboard(c *gin.Context) {
 	message := utils.GetResponse(c)
 
-	resProduct := handler.usecase.GetProduct()
+	// Ambil query search
+	search := c.Query("search")
 
-	products := []model.Product{}
+	// Ambil data produk
+	resProduct := handler.usecase.GetProductByKeyword(model.GetProductByKeywordRequest{Keyword: search})
+	var products []model.Product
 	if resProduct.Status == http.StatusOK {
 		products, _ = resProduct.Data["products"].([]model.Product)
 	}
 
 	c.HTML(http.StatusOK, "dashboard.gohtml", gin.H{
-		"Products": products,
 		"Message":  message,
+		"Products": products,
+		"Amount":   len(products),
+		"Search":   search,
 	})
 }

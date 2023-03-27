@@ -18,7 +18,15 @@ func (usecase *viewUsecaseImpl) GetProductById(req model.GetProductByIdRequest) 
 		return utils.ToWebServiceResponse("Product tidak ditemukan", http.StatusNotFound, nil)
 	}
 
-	product := model.Product{ID: productDb.ID, Name: productDb.Name, Price: productDb.Price, IsService: productDb.IsService, Image: productDb.Image, Description: productDb.Description, Stock: productDb.Stock}
+	product := model.Product{
+		ID:          productDb.ID,
+		Name:        productDb.Name,
+		Price:       utils.AddCommas(int(productDb.Price)),
+		IsService:   productDb.IsService,
+		Image:       productDb.Image,
+		Description: productDb.Description,
+		Stock:       productDb.Stock,
+	}
 
 	return utils.ToWebServiceResponse("Berhasil mendapatkan product", http.StatusOK, gin.H{
 		"product": product,

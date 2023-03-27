@@ -12,8 +12,11 @@ import (
 func (handler *viewHandler) RenderHome(c *gin.Context) {
 	message := utils.GetResponse(c)
 
+	// Ambil query search
+	search := c.Query("search")
+
 	// Ambil data produk
-	resProduct := handler.usecase.GetProduct()
+	resProduct := handler.usecase.GetProductByKeyword(model.GetProductByKeywordRequest{Keyword: search})
 	var products []model.Product
 	if resProduct.Status == http.StatusOK {
 		products, _ = resProduct.Data["products"].([]model.Product)
@@ -39,5 +42,7 @@ func (handler *viewHandler) RenderHome(c *gin.Context) {
 		"Message":  message,
 		"Name":     name,
 		"Products": products,
+		"Amount":   len(products),
+		"Search":   search,
 	})
 }

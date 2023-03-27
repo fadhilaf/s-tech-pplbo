@@ -13,7 +13,7 @@ import (
 )
 
 func (usecase *viewUsecaseImpl) GetProductByKeyword(req model.GetProductByKeywordRequest) model.WebServiceResponse {
-	productsDb, err := usecase.Store.GetProductByQuery(context.Background(), req.Keyword)
+	productsDb, err := usecase.Store.GetProductByQuery(context.Background(), "%"+req.Keyword+"%")
 	if err != nil {
 		return utils.ToWebServiceResponse("Product tidak ditemukan", http.StatusNotFound, nil)
 	}
@@ -24,7 +24,7 @@ func (usecase *viewUsecaseImpl) GetProductByKeyword(req model.GetProductByKeywor
 		products[i] = model.Product{
 			ID:          product.ID,
 			Name:        product.Name,
-			Price:       product.Price,
+			Price:       utils.AddCommas(int(product.Price)),
 			Stock:       product.Stock,
 			IsService:   product.IsService,
 			Description: product.Description,
