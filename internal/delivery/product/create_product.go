@@ -11,9 +11,9 @@ import (
 )
 
 func (handler *productHandler) CreateProduct(ctx *gin.Context) {
-	var reqNoFile model.CreateProductNoFileRequest
+	var req model.CreateProductNoFileRequest
 
-	ok := utils.BindFormAndValidate(ctx, &reqNoFile)
+	ok := utils.BindFormAndValidate(ctx, &req)
 	if !ok {
 		return
 	}
@@ -24,12 +24,10 @@ func (handler *productHandler) CreateProduct(ctx *gin.Context) {
 		return
 	}
 
-	req := model.CreateProductRequest{
-		NotFile: reqNoFile,
+	res := handler.usecase.CreateProduct(model.CreateProductRequest{
+		NotFile: req,
 		Image:   filename,
-	}
-
-	res := handler.usecase.CreateProduct(req)
+	})
 
 	// Gaya REST API
 	// ctx.JSON(res.Status, res)

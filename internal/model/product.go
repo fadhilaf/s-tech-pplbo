@@ -32,5 +32,5 @@ type GetProductByIdRequest struct {
 }
 
 type GetProductByKeywordRequest struct {
-	Keyword string
+	Keyword string `form:"search"`
 }

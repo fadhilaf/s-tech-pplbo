@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 
 	"net/http"
 
@@ -30,7 +29,6 @@ func (usecase *orderUsecaseImpl) CreateOrder(req model.CreateOrderRequest) model
 		Description: req.Description,
 	})
 	if err != nil {
-		fmt.Println(err)
 		return utils.ToWebServiceResponse("Gagal memasukkan order ke database", http.StatusInternalServerError, nil)
 	}
 

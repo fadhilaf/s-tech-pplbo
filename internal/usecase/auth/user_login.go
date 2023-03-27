@@ -15,7 +15,6 @@ func (usecase *authUsecaseImpl) UserLogin(req model.UserLoginRequest) model.WebS
 		return utils.ToWebServiceResponse("Email belum terdaftar", http.StatusNotFound, nil)
 	}
 
-	//belom sudah
 	if err := utils.ComparePassword(req.Password, user.PasswordHash); err != nil {
 		return utils.ToWebServiceResponse("Password salah", http.StatusUnauthorized, nil)
 	}

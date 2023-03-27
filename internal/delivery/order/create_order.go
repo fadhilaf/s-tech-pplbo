@@ -12,15 +12,15 @@ import (
 )
 
 func (handler *orderHandler) CreateOrder(ctx *gin.Context) {
-	var reqForm model.CreateOrderFormRequest
+	var req model.CreateOrderFormRequest
 
-	ok := utils.BindFormAndValidate(ctx, &reqForm)
+	ok := utils.BindFormAndValidate(ctx, &req)
 	if !ok {
 		return
 	}
 
 	//convert productId dari string ke uuid
-	productId, err := uuid.Parse(reqForm.ProductID)
+	productId, err := uuid.Parse(req.ProductID)
 	if err != nil {
 		return
 	}
@@ -31,13 +31,12 @@ func (handler *orderHandler) CreateOrder(ctx *gin.Context) {
 		return
 	}
 
-	req := model.CreateOrderRequest{
+	res := handler.usecase.CreateOrder(model.CreateOrderRequest{
 		UserID:      userId,
 		ProductID:   productId,
-		Quantity:    reqForm.Quantity,
-		Description: reqForm.Description,
-	}
-	res := handler.usecase.CreateOrder(req)
+		Quantity:    req.Quantity,
+		Description: req.Description,
+	})
 	utils.SaveResponse(ctx, res.Message)
 
 	// Gaya REST API
@@ -46,7 +45,7 @@ func (handler *orderHandler) CreateOrder(ctx *gin.Context) {
 	// Gaya MVC
 
 	var location url.URL
-	location = url.URL{Path: "/pesan", RawQuery: "id=" + reqForm.ProductID}
+	location = url.URL{Path: "/pesan", RawQuery: "id=" + req.ProductID}
 
 	if res.Status == http.StatusCreated {
 		location = url.URL{Path: "/pesanan"}
