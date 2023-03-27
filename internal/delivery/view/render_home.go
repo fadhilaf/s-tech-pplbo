@@ -20,10 +20,19 @@ func (handler *viewHandler) RenderHome(c *gin.Context) {
 	}
 
 	// Ambil data produk
-	resProduct := handler.usecase.GetProductByKeyword(model.GetProductByKeywordRequest{Keyword: req.Keyword})
 	var products []model.Product
-	if resProduct.Status == http.StatusOK {
-		products, _ = resProduct.Data["products"].([]model.Product)
+	if req.Keyword == "" {
+
+		resProduct := handler.usecase.GetProduct()
+		if resProduct.Status == http.StatusOK {
+			products, _ = resProduct.Data["products"].([]model.Product)
+		}
+	} else {
+
+		resProduct := handler.usecase.GetProductByKeyword(model.GetProductByKeywordRequest{Keyword: req.Keyword})
+		if resProduct.Status == http.StatusOK {
+			products, _ = resProduct.Data["products"].([]model.Product)
+		}
 	}
 
 	// Ambil data user

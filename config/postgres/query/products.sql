@@ -7,7 +7,7 @@ INSERT INTO products (
 
 -- name: GetProduct :many
 SELECT * FROM products
-ORDER BY name;
+ORDER BY created_at DESC;
 
 -- name: GetProductById :one
 SELECT * FROM products

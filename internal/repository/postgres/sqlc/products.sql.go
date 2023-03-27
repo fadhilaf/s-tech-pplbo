@@ -52,7 +52,7 @@ func (q *Queries) DeleteProduct(ctx context.Context, id uuid.UUID) error {
 
 const getProduct = `-- name: GetProduct :many
 SELECT id, name, price, stock, is_service, description, image, created_at FROM products
-ORDER BY name
+ORDER BY created_at DESC
 `
 
 func (q *Queries) GetProduct(ctx context.Context) ([]Product, error) {
