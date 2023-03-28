@@ -11,7 +11,7 @@ import (
 	"github.com/FadhilAF/s-tech-pplbo/internal/utils"
 )
 
-func (usecase *authUsecaseImpl) AdminLogin(req model.AdminLoginRequest) model.WebServiceResponse {
+func (usecase *authUsecaseImpl) AdminLogin(req model.LoginRequest) model.WebServiceResponse {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("Error ketika membaca .env: %s", err)

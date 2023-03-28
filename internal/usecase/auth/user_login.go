@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (usecase *authUsecaseImpl) UserLogin(req model.UserLoginRequest) model.WebServiceResponse {
+func (usecase *authUsecaseImpl) UserLogin(req model.LoginRequest) model.WebServiceResponse {
 	user, err := usecase.Store.GetUserByEmail(context.Background(), req.Email)
 	if err != nil {
 		return utils.ToWebServiceResponse("Email belum terdaftar", http.StatusNotFound, nil)

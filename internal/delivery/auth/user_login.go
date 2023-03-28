@@ -11,7 +11,7 @@ import (
 )
 
 func (handler *authHandler) UserLogin(ctx *gin.Context) {
-	var req model.UserLoginRequest
+	var req model.LoginRequest
 
 	ok := utils.BindFormAndValidate(ctx, &req)
 	if !ok {
