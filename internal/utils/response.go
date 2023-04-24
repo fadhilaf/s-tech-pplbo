@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"fmt"
+
 	"github.com/FadhilAF/s-tech-pplbo/internal/model"
 	"github.com/gin-gonic/gin"
 )
@@ -21,6 +23,8 @@ func SaveResponse(c *gin.Context, message string) {
 
 func GetResponse(c *gin.Context) string {
 	cookie, err := c.Cookie("response")
+
+	fmt.Println(cookie)
 
 	if err != nil {
 		return ""

@@ -47,6 +47,9 @@ func (app *App) createHttpHandlers() *gin.Engine {
 	apiRouterGroup := router.Group("/api")
 	app.apiHandler(apiRouterGroup)
 
+	// Set a lower memory limit for multipart forms (default is 32 MiB)
+	// router.MaxMultipartMemory = 8 << 20 // 8 MiB
+
 	// ado yg template folder path ny "internal/template/blabla" ado jg yg "file://internal/template/blabla"
 	router.LoadHTMLGlob("internal/template/*.gohtml")
 	router.Static("/assets", "./internal/template/assets")

@@ -20,6 +20,7 @@ func (usecase *viewUsecaseImpl) GetOrder() model.WebServiceResponse {
 
 	orders := make([]model.Order, len(ordersDb))
 
+	//Seharusnyo pake JOIN ON dari SQL nyo langusng, lebih efisien (lower level of abstraction)
 	for i, order := range ordersDb {
 		product, err := usecase.Store.GetProductById(context.Background(), order.ProductID)
 		if err != nil {

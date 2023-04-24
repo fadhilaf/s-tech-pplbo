@@ -11,6 +11,7 @@ import (
 func SaveFileFromForm(ctx *gin.Context, field string, path string) (filename string, ok bool) {
 	file, err := ctx.FormFile(field)
 	if err != nil {
+		fmt.Println("Gagal mendapatkan file dari form: ", err)
 		return "", false
 	}
 
